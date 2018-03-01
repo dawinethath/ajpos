@@ -1,0 +1,26 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "masterDS": {
+    "host": "174.138.26.78",
+    "port": 3306,
+    "url": "",
+    "database": "db_master",
+    "password": "Aijaz-Tech-Master-Key@2018",
+    "name": "masterDS",
+    "user": "default_user",
+    "connector": "mysql"
+  },
+  "posDS": {
+    "host": "174.138.26.78",
+    "port": 3306,
+    "url": "",
+    "database": "db_pos",
+    "password": "Aijaz-Tech-Master-Key@2018",
+    "name": "posDS",
+    "user": "default_user",
+    "connector": "mysql"
+  }
+}

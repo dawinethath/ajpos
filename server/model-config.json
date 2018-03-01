@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "masterDS"
+  },
+  "AccessToken": {
+    "dataSource": "masterDS",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "masterDS",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "masterDS",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "masterDS",
+    "public": false
+  },
+  "connections": {
+    "dataSource": "masterDS",
+    "public": true
+  },
+  "companies": {
+    "dataSource": "masterDS",
+    "public": true
+  },
+  "company_user": {
+    "dataSource": "masterDS",
+    "public": true
+  },
+  "categories": {
+    "dataSource": "posDS",
+    "public": true
+  },
+  "contacts": {
+    "dataSource": "posDS",
+    "public": true
+  },
+  "products": {
+    "dataSource": "posDS",
+    "public": true
+  },
+  "stocks": {
+    "dataSource": "posDS",
+    "public": true
+  },
+  "transactions": {
+    "dataSource": "posDS",
+    "public": true
+  },
+  "unit_of_measurements": {
+    "dataSource": "posDS",
+    "public": true
+  }
+}

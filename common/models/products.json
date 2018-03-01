@@ -1,0 +1,67 @@
+{
+  "name": "products",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number",
+      "id": true
+    },
+    "category_id": {
+      "type": "number"
+    },
+    "unit_of_measurement_id": {
+      "type": "number"
+    },
+    "number": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "price": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "favorite": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "stocks": {
+      "type": "hasMany",
+      "model": "stocks",
+      "foreignKey": "product_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigitalOcean Spaces Tutorial</title>
+
+  <!-- AWS SKD -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.193.0.min.js"></script>
+  <script src="js/lib/jquery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+
+  <div class="small-container">
+    <input id="do" type="button" value="SPACE" />    
+  </div>
+
+  <script>
+    $("#do").click(function() {
+      // Configure client for use with Spaces
+      const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
+      const s3 = new AWS.S3({
+        endpoint: spacesEndpoint,
+        accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
+        secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
+      });
+
+      // Add a file to a Space
+      var params = {
+        ACL: "public-read",
+        Body: "The contents of the file", 
+        Bucket: "aijazspace", 
+        Key: "file.txt"
+      };
+      
+      s3.putObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else console.log(data); // successful response
+      });
+    });
+  </script>
+
+</body>
+
+</html>
