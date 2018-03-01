@@ -1412,11 +1412,9 @@
 	var app = app || {};
 	var baseUrl = window.location.origin;
 	var apiUrl = baseUrl + "/api/";
-	var bucket = [];//new AWS.S3({params: {Bucket: 'aijaztech'}});
 	app.pageLoaded = {};
 	app.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	app.companyData = JSON.parse(localStorage.getItem('userData/company')) ? JSON.parse(localStorage.getItem('userData/company')) : "";
-	app.spaces = "https://aijaztech.sgp1.digitaloceanspaces.com";
 	app.emptyString = "";
 	kendo.culture(app.companyData.locale);
 	function currencyFormat(amount){
@@ -2587,8 +2585,8 @@
 		onSelect 				: function(e){
 	        // Array with information about the uploaded files
 	        var self = this, 
-	        files = e.files[0],
-	        obj = this.get("obj");
+				files = e.files[0],
+				obj = this.get("obj");
 
 	        var fileReader = new FileReader();
 	        fileReader.onload = function (event) {
@@ -2599,35 +2597,51 @@
 			fileReader.readAsDataURL(files.rawFile);
 			
 	        // Check the extension of each file and abort the upload if it is not .jpg	       
-            // if (files.extension.toLowerCase() === ".jpg"
-            // 	|| files.extension.toLowerCase() === ".jpeg"
-            // 	|| files.extension.toLowerCase() === ".tiff"
-            // 	|| files.extension.toLowerCase() === ".png" 
-            // 	|| files.extension.toLowerCase() === ".gif"){
+            if (files.extension.toLowerCase() === ".jpg"
+            	|| files.extension.toLowerCase() === ".jpeg"
+            	|| files.extension.toLowerCase() === ".tiff"
+            	|| files.extension.toLowerCase() === ".png" 
+            	|| files.extension.toLowerCase() === ".gif"){
 
-            // 	if(this.attachmentDS.total()>0){
-            // 		var att = this.attachmentDS.at(0);
-            // 		this.attachmentDS.remove(att);
-            // 	}
+            	var key = 'ITEM_' + app.companyData.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
-            // 	var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+            	// Configure client for use with Spaces
+				const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
+				const s3 = new AWS.S3({
+					endpoint: spacesEndpoint,
+					accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
+					secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
+				});
 
-            // 	this.attachmentDS.add({
-            // 		user_id 		: this.get("user_id"),
-            // 		item_id 		: obj.id,
-            // 		type 			: "Item",
-            // 		name 			: files.name,
-            // 		description 	: "",
-            // 		key 			: key,
-            // 		url 			: banhji.s3 + key,
-            // 		size 			: files.size,
-            // 		created_at 		: new Date(),
+				// Add a file to a Space
+				var params = {
+					ACL: "public-read",
+					Body: files.rawFile, 
+					Bucket: "aijazspace/pos", 
+					Key: key
+				};
+				
+				s3.putObject(params, function(err, data) {
+					if (err) console.log(err, err.stack); // an error occurred
+					else console.log(data); // successful response
+				});
 
-            // 		file 			: files.rawFile
-            // 	});
-            // }else{
-            // 	alert("This type of file is not allowed to attach.");
-            // }
+				// this.attachmentDS.add({
+            	// 	user_id 		: this.get("user_id"),
+            	// 	item_id 		: obj.id,
+            	// 	type 			: "Item",
+            	// 	name 			: files.name,
+            	// 	description 	: "",
+            	// 	key 			: key,
+            	// 	url 			: banhji.s3 + key,
+            	// 	size 			: files.size,
+            	// 	created_at 		: new Date(),
+
+            	// 	file 			: files.rawFile
+            	// });
+            }else{
+            	alert("This type of file is not allowed to upload.");
+            }
 	    },	    
 	    saveAttachment 	 		: function(){
 	    	$.each(this.attachmentDS.data(), function(index, value){
