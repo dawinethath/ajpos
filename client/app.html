@@ -598,7 +598,8 @@
 </script>
 <script id="sales-product-template" type="text/x-kendo-tmpl">
 	<div class="product" data-bind="click: addToCart">
-		<img src="http://demos.telerik.com/kendo-ui/content/web/foods/#:id#.jpg" alt="#:name# image" />
+		<!-- <img src="http://demos.telerik.com/kendo-ui/content/web/foods/#:id#.jpg" alt="#:name# image" /> -->
+		<img src="#:image_url#" alt="#:name# image" />
 		<h3>#:name# <br><br> #=currencyFormat(price)#</h3>
 	</div>
 </script>
@@ -1416,6 +1417,7 @@
 	app.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	app.companyData = JSON.parse(localStorage.getItem('userData/company')) ? JSON.parse(localStorage.getItem('userData/company')) : "";
 	app.emptyString = "";
+	app.space = "sgp1.digitaloceanspaces.com";
 	kendo.culture(app.companyData.locale);
 	function currencyFormat(amount){
 		var amt = kendo.parseFloat(amount);
@@ -1687,6 +1689,12 @@
 			{ value: 3, text: "អ្នកគ្រប់គ្រងទូរទៅ" },
 			{ value: 4, text: "បុគ្គលិកទូរទៅ" }
 		],
+		params : {
+			ACL: "public-read",
+			Body: "", 
+			Bucket: "aijazspace/pos", 
+			Key: ""
+		},
 		successMessage                  : "ប្រត្តិបត្តការរបស់លោកអ្នកបានសម្រេចហើយ",
 		warningMessage                  : "មានបញ្ហា សូមពិនិត្យមើលម្ដងទៀត",
 		confirmMessage 					: "តើលោកអ្នកចង់បោះបង់ចោលប្រត្តិបត្តការនេះ មែនទេ?",
@@ -2569,6 +2577,8 @@
 		categoryDS      		: dataStore(apiUrl + "categories"),
 		unitOfMeasurementDS     : dataStore(apiUrl + "unit_of_measurements"),
 		obj 					: [],
+		key 					: "",
+		rawFile 				: "",
 		editMode 				: false,
 		notDuplicateNumber 		: true,
 		pageLoad        		: function(id){
@@ -2584,66 +2594,74 @@
 		//Upload
 		onSelect 				: function(e){
 	        // Array with information about the uploaded files
-	        var self = this, 
-				files = e.files[0],
-				obj = this.get("obj");
+	        var files = e.files[0],
+				obj = this.get("obj"),
+				validating = true;
 
 	        var fileReader = new FileReader();
 	        fileReader.onload = function (event) {
 	            var mapImage = event.target.result;
-				console.log(mapImage);
-	            self.obj.set('image_url', mapImage);
+				obj.set("image_url", mapImage);
 	        }
 			fileReader.readAsDataURL(files.rawFile);
 			
-	        // Check the extension of each file and abort the upload if it is not .jpg	       
-            if (files.extension.toLowerCase() === ".jpg"
-            	|| files.extension.toLowerCase() === ".jpeg"
-            	|| files.extension.toLowerCase() === ".tiff"
-            	|| files.extension.toLowerCase() === ".png" 
-            	|| files.extension.toLowerCase() === ".gif"){
+			//Check file size
+			if(files.size > 2000000){
+				validating = false;
 
-            	var key = 'ITEM_' + app.companyData.id + "_" + Math.floor(Math.random() * 100000000000000001);
+				app.source.warningAlert("Image max size 2MB.");
+			}
 
-            	// Configure client for use with Spaces
-				const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
-				const s3 = new AWS.S3({
-					endpoint: spacesEndpoint,
-					accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
-					secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
-				});
+			// Check the extension of each file and abort the upload if it is not .jpg	       
+			if (files.extension.toLowerCase() === ".jpg"
+				|| files.extension.toLowerCase() === ".jpeg"
+				|| files.extension.toLowerCase() === ".tiff"
+				|| files.extension.toLowerCase() === ".png" 
+				|| files.extension.toLowerCase() === ".gif"){
+			}else{
+				validating = false;
 
-				// Add a file to a Space
-				var params = {
-					ACL: "public-read",
-					Body: files.rawFile, 
-					Bucket: "aijazspace/pos", 
-					Key: key
-				};
-				
-				s3.putObject(params, function(err, data) {
-					if (err) console.log(err, err.stack); // an error occurred
-					else console.log(data); // successful response
-				});
+				app.source.warningAlert("Image type not support");
+			}
 
-				// this.attachmentDS.add({
-            	// 	user_id 		: this.get("user_id"),
-            	// 	item_id 		: obj.id,
-            	// 	type 			: "Item",
-            	// 	name 			: files.name,
-            	// 	description 	: "",
-            	// 	key 			: key,
-            	// 	url 			: banhji.s3 + key,
-            	// 	size 			: files.size,
-            	// 	created_at 		: new Date(),
+			if(validating){
+				var key = 'ITEM_' + app.companyData.id + "_" + Math.floor(Math.random() * 100000000000000001) + files.extension.toLowerCase();
 
-            	// 	file 			: files.rawFile
-            	// });
-            }else{
-            	alert("This type of file is not allowed to upload.");
-            }
-	    },	    
-	    saveAttachment 	 		: function(){
+				this.set("key", key);
+				this.set("rawFile", files.rawFile);
+			}
+	    },
+		uploadFile 			: function(){
+			var obj = this.get("obj"),
+				key = this.get("key"),
+				rawFile = this.get("rawFile");
+
+			// Configure client for use with Spaces
+			const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
+			const s3 = new AWS.S3({
+				endpoint: spacesEndpoint,
+				accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
+				secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
+			});
+
+			// Add a file to Space
+			var params = {
+				ACL: "public-read",
+				Body: rawFile, 
+				Bucket: "aijazspace/pos", 
+				Key: key
+			};
+
+			s3.putObject(params, function(err, data) {
+				if (err) console.log(err, err.stack); // an error occurred
+				else console.log(data); // successful response
+			});
+			
+			obj.set("image_url", "https://aijazspace." + app.space +"/pos/"+ key);
+			this.set("key", "");
+			this.set("rawFile", "");
+		},
+	    saveAttachment 	 	: function(){
 	    	$.each(this.attachmentDS.data(), function(index, value){
 		    	if(!value.id){
 			    	var params = { 
@@ -2737,7 +2755,7 @@
 				cost 					: 0,
 				price 					: 0,
 				description 			: "",
-				image_url 				: "",
+				image_url 				: "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg",
 				thumbnail_url 			: "",
 				favorite 				: 0
 			});
@@ -2764,11 +2782,17 @@
 	    },
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
+
+			//Upload
+			if(this.get("rawFile")!==""){
+				this.uploadFile();
+			}
 	    	
 			//Save Obj
 			this.objSync()
 			.then(function(data){ //Success
-				
+				app.source.uploadFile();
+
 				return data;
 			}, function(reason) { //Error
 				app.source.dangerAlert(reason);
