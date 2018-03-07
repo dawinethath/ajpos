@@ -5,7 +5,7 @@ module.exports = function(app) {
 		comUser = app.models.company_user,
 		conn = app.models.connections;
 	
-	remotes.before('**', function (ctx, next){		
+	remotes.before('**', function (ctx, next){
 		//Datasource attachs models
 		if (!ctx.args.options) return next();
 		if (!ctx.args.options.accessToken) return next();
@@ -32,7 +32,7 @@ module.exports = function(app) {
 				//Attach models to datasource
 				models.forEach(function(m) {
 					if (lbModels.indexOf(m) === -1) {
-						ds.attach(app.models[m]);
+						app.models[m].attachTo(ds);
 					}
 				});
 
