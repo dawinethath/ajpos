@@ -1,5 +1,5 @@
 {
-  "name": "stocks",
+  "name": "taxes",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -10,46 +10,19 @@
       "type": "number",
       "id": true
     },
-    "tax_id": {
-      "type": "number"
-    },
-    "transaction_id": {
-      "type": "number"
-    },
-    "product_id": {
-      "type": "number"
-    },
-    "description": {
+    "name": {
       "type": "string"
     },
-    "quantity": {
-      "type": "number"
-    },
-    "movement": {
-      "type": "number"
-    },
-    "cost": {
-      "type": "number"
-    },
-    "price": {
-      "type": "number"
-    },
-    "discount": {
-      "type": "number"
-    },
-    "amount": {
-      "type": "number"
-    },
-    "tax": {
+    "rate": {
       "type": "number"
     }
   },
   "validations": [],
   "relations": {
     "products": {
-      "type": "belongsTo",
+      "type": "hasMany",
       "model": "products",
-      "foreignKey": "product_id"
+      "foreignKey": "tax_id"
     }
   },
   "acls": [

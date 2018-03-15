@@ -19,7 +19,23 @@ module.exports = function(Stocks) {
                 //Attach model to datasource
                 Stocks.attachTo(ds);
 
-                next();
+                //Move models to ctx.data
+				if (!ctx.args.data) return next();
+				if (!ctx.args.data.models) return next();
+				var mod = JSON.parse(ctx.args.data.models);
+				if(ctx.req.method=="PUT"){
+					mod.forEach(function(m) {
+						if(mod.indexOf(m)==0){
+							ctx.args.data = m;
+						}else{
+							// app.models[m].replaceOrCreate(m);
+						}
+					});
+					next();
+				}else{
+					ctx.args.data = mod;
+					next();
+				}
 			});
         });
     });

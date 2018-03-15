@@ -16,6 +16,9 @@
     "unit_of_measurement_id": {
       "type": "number"
     },
+    "tax_id": {
+      "type": "number"
+    },
     "number": {
       "type": "string"
     },
@@ -47,6 +50,11 @@
       "type": "hasMany",
       "model": "stocks",
       "foreignKey": "product_id"
+    },
+    "taxes": {
+      "type": "belongsTo",
+      "model": "taxes",
+      "foreignKey": "tax_id"
     }
   },
   "acls": [

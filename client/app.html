@@ -686,6 +686,15 @@
 									attributes: { style: 'text-align: right;' }, 
 									width:'100px'
 								},
+								{
+									field: 'tax',
+									title: 'ពន្ធអាករ',
+									hidden: true,
+									format: '{0:p}',
+									editor: numberTextboxEditor,
+									attributes: { style: 'text-align: right;' }, 
+									width:'100px'
+								}
 							]"
 							data-auto-bind="false"
 							data-bind="source: stockDS"
@@ -787,9 +796,7 @@
 										<td>កាលបរិច្ឆេទ</td>
 										<td>
 											<input id="txnDate" name="txnDate"
-												data-role="datepicker"
-												data-format="dd-MM-yyyy"
-												data-parse-formats="yyyy-MM-dd HH:mm:ss" 
+												data-role="datetimepicker"
 												data-bind="value: obj.transaction_date" 
 												required data-required-msg="required"
 												style="width: 100%;" />
@@ -1199,12 +1206,26 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="vertical-align: top;">
-								<div class="checkbox">
-									<input type="checkbox" id="check-2" data-bind="checked: obj.favorite">
-									<label for="check-2">ទំនិញសំណប់</label>
-								</div>
+							<td style="vertical-align: top;">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">ពន្ធអាករ</label>
+									<input id="ddlTax" 
+										data-role="dropdownlist"
+										data-value-primitive="true"
+										data-text-field="name"
+										data-value-field="id"
+										data-bind="value: obj.tax_id,
+												source: taxDS"
+										data-option-label="--- សូមជ្រើសរើស ---"
+										style="width: 100%;" />
+								</fieldset>
 							</td>
+							<td style="vertical-align: top;">
+									<div class="checkbox">
+										<input type="checkbox" id="check-2" data-bind="checked: obj.favorite">
+										<label for="check-2">ទំនិញសំណប់</label>
+									</div>
+								</td>
 							<td colspan="2">
 								<fieldset class="form-group">
 									<img width="120px" data-bind="attr: { src: obj.image_url }" style="margin-bottom: 15px; border: 1px solid #ddd;">
@@ -2087,7 +2108,7 @@
             }
 
 			this.productDS.query({
-                filter: { where },
+                filter:{ where },
                 page:1,
                 pageSize:20
             });
@@ -2254,6 +2275,7 @@
 			if(nonExist){
 				this.stockDS.add({
 					transaction_id 		: obj.id,
+					tax_id 				: 0,
 					product_id 			: data.id,
 					description 		: data.description,
 					quantity 			: 1,
@@ -2262,7 +2284,7 @@
 					discount 			: 0,
 					discount_percentage	: 0,
 					amount 				: data.price,
-					tax 				: 0,
+					tax 				: data.tax_id,
 
 					products 			: data
 				});
@@ -2295,8 +2317,15 @@
 				var amount = value.quantity * value.price;
 				subTotal += amount;
 				discount += value.discount;
-				tax += value.tax;
 
+				if(value.tax_id>0){
+					var taxes = this.taxDS.get(value.tax_id),
+						taxAmount = amount * taxes.rate;
+
+						tax += taxAmount;
+						value.set("tax", taxAmount);
+				}
+				
 				value.set("amount", amount);
 			});
 
@@ -2335,7 +2364,7 @@
 		save 				: function(){
 	    	var self = this, obj = this.get("obj");
 
-	    	obj.set("transaction_date", kendo.toString(new Date(obj.transaction_date), "s"));
+	    	// obj.set("transaction_date", kendo.toString(new Date(obj.transaction_date), "s"));
 	    	
 			//Save Obj
 			this.objSync()
@@ -2574,6 +2603,7 @@
 		dataSource      		: dataStore(apiUrl + "products"),
 		spaceDS      			: dataStore(apiUrl + "spaces/upload"),
 		productDS      			: dataStore(apiUrl + "products"),
+		taxDS      				: dataStore(apiUrl + "taxes"),
 		categoryDS      		: dataStore(apiUrl + "categories"),
 		unitOfMeasurementDS     : dataStore(apiUrl + "unit_of_measurements"),
 		obj 					: [],
@@ -2750,6 +2780,7 @@
 			this.dataSource.insert(0, {
 				category_id 			: 0,
 				unit_of_measurement_id	: 0,
+				tax_id 					: 0,
 				number 					: "",
 				name 					: "",
 				cost 					: 0,

@@ -59,6 +59,10 @@
     "dataSource": "posDS",
     "public": true
   },
+  "taxes": {
+    "dataSource": "posDS",
+    "public": true
+  },
   "stocks": {
     "dataSource": "posDS",
     "public": true
