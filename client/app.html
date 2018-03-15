@@ -1349,6 +1349,31 @@
 	</div><!--.container-fluid-->
 </script>
 
+<script id="category" type="text/x-kendo-template">
+	<h2 data-bind="text: title"></h2>
+
+	Name:<input data-bind="value: obj.name" />
+	Description:<input data-bind="value: obj.description" />
+	<button data-bind="click: add">ADD</button>
+	<button data-bind="click: update">UPDATE</button>
+	<button data-bind="click: read">READ</button>
+
+	<br>
+
+	<div data-role="grid"
+		data-editable="true"
+		data-columns="[
+			{ field: 'name', 'width': 270 },
+			{ field: 'description' },
+			{ title:'EDIT', template:'<button data-bind=click:edit>EDIT</button>' },
+			{ title:'DELETE', template:'<button data-bind=click:delete>DELETE</button>' }
+		]"
+		data-bind="source: dataSource"
+		style="height: 200px"></div>
+				 
+
+</script>
+
 <!-- ********************************************
 *   Template List Section     					*
 ********************************************* -->
@@ -2961,6 +2986,43 @@
 		}
 	});
 	
+	app.category = kendo.observable({
+		dataSource      	: dataStore(apiUrl + "categories"),
+		title 				: "Manage Category",
+		obj 				: [],
+		pageLoad 			: function(){},
+		edit 				: function(e){
+			var data = e.data;
+			
+			this.set("obj", data);
+		},
+		read 				: function(){
+			var obj = this.get("obj");
+
+			this.dataSource.filter({ field:"name", value: obj.name });
+		},
+		add				: function(){
+			var obj = this.get("obj");
+
+			this.dataSource.add({
+				name 			: obj.name,
+				description 	: obj.description
+			});
+
+			this.dataSource.sync();
+		},
+		update 			: function(){
+			this.dataSource.sync();
+		},
+		delete 			: function(e){
+			var row = e.data;
+
+			this.dataSource.remove(row);
+
+			this.dataSource.sync();
+		}
+	});
+	
 	/* Views & Layout */
 	app.view = {
 		layout      : new kendo.Layout('#layout', {model: app.Layout}),
@@ -2984,6 +3046,7 @@
 
 		//Settings
 		settings: new kendo.Layout("#settings", {model: app.settings}),
+		category: new kendo.Layout("#category", {model: app.category}),
 		
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
@@ -3159,6 +3222,17 @@
 		var vm = app.settings;
 		if(app.pageLoaded["settings"]==undefined){
 			app.pageLoaded["settings"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/category", function(){                 
+		app.view.layout.showIn("#content", app.view.category);
+
+		var vm = app.category;
+		if(app.pageLoaded["category"]==undefined){
+			app.pageLoaded["category"] = true;
 		}
 
 		vm.pageLoad();        
