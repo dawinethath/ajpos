@@ -50,6 +50,11 @@
       "type": "belongsTo",
       "model": "products",
       "foreignKey": "product_id"
+    },
+    "taxes": {
+      "type": "belongsTo",
+      "model": "taxes",
+      "foreignKey": "tax_id"
     }
   },
   "acls": [

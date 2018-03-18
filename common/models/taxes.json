@@ -23,6 +23,11 @@
       "type": "hasMany",
       "model": "products",
       "foreignKey": "tax_id"
+    },
+    "stocks": {
+      "type": "hasMany",
+      "model": "stocks",
+      "foreignKey": "tax_id"
     }
   },
   "acls": [
