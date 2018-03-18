@@ -687,13 +687,12 @@
 									width:'100px'
 								},
 								{
-									field: 'tax',
+									field: 'taxes',
 									title: 'ពន្ធអាករ',
 									hidden: true,
-									format: '{0:p}',
-									editor: numberTextboxEditor,
-									attributes: { style: 'text-align: right;' }, 
-									width:'100px'
+									editor: taxEditor, 
+									template: '#=taxes?taxes.name:app.emptyString#', 
+									width: '100px'
 								}
 							]"
 							data-auto-bind="false"
@@ -1009,8 +1008,19 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="2"></td>
-							<td>សរុប</td>
+							<td colspan="3" align="right">សរុបរង:</td>
+							<td align="right">
+								<span data-format="c" data-bind="text: obj.sub_total"></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="right">ពន្ធអាករ:</td>
+							<td align="right">
+								<span data-format="c" data-bind="text: obj.tax"></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="right">សរុប:</td>
 							<td align="right">
 								<span data-format="c" data-bind="text: obj.amount"></span>
 							</td>
@@ -1415,6 +1425,19 @@
         $('<input name="' + options.field + '" type="number" class="form-control" style="width: 95%;" min="0" max="1" />')
         .appendTo(container);
     }
+
+	function taxEditor(container, options) {
+        $('<input id="' + options.field + '" name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+			optionLabel: "--- ជ្រើសរើស ---",
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: dataStore(apiUrl + "taxes")
+        });
+    }
 </script>
 
 
@@ -1429,7 +1452,7 @@
 <!-- Others -->
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 
-<script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script>
+<!-- <script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script> -->
 <script src="assets/js/lib/popper/popper.min.js"></script>
 <script src="assets/js/lib/tether/tether.min.js"></script>
 <script src="assets/js/lib/bootstrap/bootstrap.min.js"></script>
@@ -2133,7 +2156,10 @@
             }
 
 			this.productDS.query({
-                filter:{ where },
+                filter:[
+					{ where },
+					{ include: "taxes" }
+				],
                 page:1,
                 pageSize:20
             });
@@ -2225,7 +2251,7 @@
 
 			this.stockDS.filter([
 				{ where: { transaction_id: id } },
-				{ include:["products"] }
+				{ include:["products","taxes"] }
 			]);
 		},
 		addObj 				: function(){
@@ -2300,7 +2326,7 @@
 			if(nonExist){
 				this.stockDS.add({
 					transaction_id 		: obj.id,
-					tax_id 				: 0,
+					tax_id 				: data.tax_id,
 					product_id 			: data.id,
 					description 		: data.description,
 					quantity 			: 1,
@@ -2309,9 +2335,10 @@
 					discount 			: 0,
 					discount_percentage	: 0,
 					amount 				: data.price,
-					tax 				: data.tax_id,
+					tax 				: 0,
 
-					products 			: data
+					products 			: data,
+					taxes 				: data.taxes
 				});
 			}
 
@@ -2325,6 +2352,14 @@
 
 			if(arg.field){
 				if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.onChanges();
+				}else if(arg.field=="taxes"){
+					var dataRow = arg.items[0];
+
+					if(dataRow.taxes){
+						dataRow.set("tax_id", dataRow.taxes.id);
+					}
+
 					self.onChanges();
 			    }else if(arg.field=="discount_percentage"){
 			    	var dataRow = arg.items[0],
@@ -2343,12 +2378,11 @@
 				subTotal += amount;
 				discount += value.discount;
 
-				if(value.tax_id>0){
-					var taxes = this.taxDS.get(value.tax_id),
-						taxAmount = amount * taxes.rate;
+				if(value.taxes){
+					var taxAmount = amount * value.taxes.rate;
 
-						tax += taxAmount;
-						value.set("tax", taxAmount);
+					tax += taxAmount;
+					value.set("tax", taxAmount);
 				}
 				
 				value.set("amount", amount);
@@ -3149,7 +3183,8 @@
 				amount 				: 0,
 				tax 				: 0,
 
-				products 			: []
+				products 			: [],
+				taxes 				: []
 			});
 
 			var obj = vm.stockDS.at(0);
