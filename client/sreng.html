@@ -687,12 +687,13 @@
 									width:'100px'
 								},
 								{
-									field: 'taxes',
+									field: 'tax',
 									title: 'ពន្ធអាករ',
 									hidden: true,
-									editor: taxEditor, 
-									template: '#=taxes?taxes.name:app.emptyString#', 
-									width: '100px'
+									format: '{0:p}',
+									editor: numberTextboxEditor,
+									attributes: { style: 'text-align: right;' }, 
+									width:'100px'
 								}
 							]"
 							data-auto-bind="false"
@@ -1008,19 +1009,8 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="3" align="right">សរុបរង:</td>
-							<td align="right">
-								<span data-format="c" data-bind="text: obj.sub_total"></span>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3" align="right">ពន្ធអាករ:</td>
-							<td align="right">
-								<span data-format="c" data-bind="text: obj.tax"></span>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3" align="right">សរុប:</td>
+							<td colspan="2"></td>
+							<td>សរុប</td>
 							<td align="right">
 								<span data-format="c" data-bind="text: obj.amount"></span>
 							</td>
@@ -1260,46 +1250,11 @@
 
 <script id="settings" type="text/x-kendo-template">
 	<div class="container-fluid">
-		<table>
-			<tr>
-				<td>
-					<a href="#/company_profile">
-						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">Company Profile</button>
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<a href="#/category">
-						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">Category</button>
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<a href="#/unit_of_measurements">
-						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">UOM</button>
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<a href="#/taxes">
-						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">Taxes</button>
-					</a>
-				</td>
-			</tr>
-		</table>
-	</div><!--.container-fluid-->
-</script>
-
-<script id="company_profile" type="text/x-kendo-template">
-	<div class="container-fluid">
 		<section class="box-typical">
 			<header class="box-typical-header">
 				<div class="tbl-row">
 					<div class="tbl-cell tbl-cell-title">
-						<h3>Company Profile</h3>
+						<h3>ការកំណត់</h3>
 					</div>
 					<div class="tbl-cell tbl-cell-action-bordered">
 						<button type="button" class="action-btn" data-bind="click: save">
@@ -1412,7 +1367,9 @@
 		</div>
 	</div>
 	<button type="button" class="btn btn-inline btn-primary" data-bind="click: add">ADD</button>
-	<button type="button" class="btn btn-inline btn-primary" data-bind="click: update">UPDATE</button>
+	<button data-bind="click: update" class="k-button k-primary">UPDATE</button>
+	<button data-bind="click: read" class="k-button k-primary">READ</button>
+	<button data-bind="click: setObj" class="k-button k-primary">NEW OBJ</button>
 
 	<br>
 	<br>
@@ -1551,19 +1508,6 @@
         $('<input name="' + options.field + '" type="number" class="form-control" style="width: 95%;" min="0" max="1" />')
         .appendTo(container);
     }
-
-	function taxEditor(container, options) {
-        $('<input id="' + options.field + '" name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-			optionLabel: "--- ជ្រើសរើស ---",
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: dataStore(apiUrl + "taxes")
-        });
-    }
 </script>
 
 
@@ -1578,7 +1522,7 @@
 <!-- Others -->
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 
-<!-- <script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script> -->
+<script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="assets/js/lib/popper/popper.min.js"></script>
 <script src="assets/js/lib/tether/tether.min.js"></script>
 <script src="assets/js/lib/bootstrap/bootstrap.min.js"></script>
@@ -2282,10 +2226,7 @@
             }
 
 			this.productDS.query({
-                filter:[
-					{ where },
-					{ include: "taxes" }
-				],
+                filter:{ where },
                 page:1,
                 pageSize:20
             });
@@ -2377,7 +2318,7 @@
 
 			this.stockDS.filter([
 				{ where: { transaction_id: id } },
-				{ include:["products","taxes"] }
+				{ include:["products"] }
 			]);
 		},
 		addObj 				: function(){
@@ -2452,7 +2393,7 @@
 			if(nonExist){
 				this.stockDS.add({
 					transaction_id 		: obj.id,
-					tax_id 				: data.tax_id,
+					tax_id 				: 0,
 					product_id 			: data.id,
 					description 		: data.description,
 					quantity 			: 1,
@@ -2461,10 +2402,9 @@
 					discount 			: 0,
 					discount_percentage	: 0,
 					amount 				: data.price,
-					tax 				: 0,
+					tax 				: data.tax_id,
 
-					products 			: data,
-					taxes 				: data.taxes
+					products 			: data
 				});
 			}
 
@@ -2478,14 +2418,6 @@
 
 			if(arg.field){
 				if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
-					self.onChanges();
-				}else if(arg.field=="taxes"){
-					var dataRow = arg.items[0];
-
-					if(dataRow.taxes){
-						dataRow.set("tax_id", dataRow.taxes.id);
-					}
-
 					self.onChanges();
 			    }else if(arg.field=="discount_percentage"){
 			    	var dataRow = arg.items[0],
@@ -2504,11 +2436,12 @@
 				subTotal += amount;
 				discount += value.discount;
 
-				if(value.taxes){
-					var taxAmount = amount * value.taxes.rate;
+				if(value.tax_id>0){
+					var taxes = this.taxDS.get(value.tax_id),
+						taxAmount = amount * taxes.rate;
 
-					tax += taxAmount;
-					value.set("tax", taxAmount);
+						tax += taxAmount;
+						value.set("tax", taxAmount);
 				}
 				
 				value.set("amount", amount);
@@ -3051,10 +2984,6 @@
 	});
 
 	app.settings = kendo.observable({
-
-	});
-
-	app.company_profile = kendo.observable({
 		dataSource      		: app.companyDS,
 		currencyList     		: app.source.currencyList,
 		currencyFormatList      : app.source.currencyFormatList,
@@ -3155,10 +3084,20 @@
 		title 				: "Manage Category",
 		obj 				: [],
 		pageLoad 			: function(){},
+		setObj 				: function(){
+			var newObj = { name:"name new obj", description: "description new obj" };
+
+			this.set("obj", newObj);
+		},
 		edit 				: function(e){
 			var data = e.data;
 			
 			this.set("obj", data);
+		},
+		read 				: function(){
+			var obj = this.get("obj");
+
+			this.dataSource.filter({ field:"name", value: obj.name });
 		},
 		add				: function(){
 			var obj = this.get("obj");
@@ -3273,14 +3212,13 @@
 		//Settings
 		settings: new kendo.Layout("#settings", {model: app.settings}),
 		category: new kendo.Layout("#category", {model: app.category}),
-		company_profile: new kendo.Layout("#company_profile", {model: app.company_profile}),
 
 		//UOM
 		unit_of_measurements: new kendo.Layout("#unit_of_measurements", {model: app.unit_of_measurements}),
 
 		//taxes
 		taxes: new kendo.Layout("#taxes", {model: app.taxes}),
-		
+
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
 	};
@@ -3382,8 +3320,7 @@
 				amount 				: 0,
 				tax 				: 0,
 
-				products 			: [],
-				taxes 				: []
+				products 			: []
 			});
 
 			var obj = vm.stockDS.at(0);
@@ -3456,18 +3393,6 @@
 		var vm = app.settings;
 		if(app.pageLoaded["settings"]==undefined){
 			app.pageLoaded["settings"] = true;
-		}
-
-		vm.pageLoad();        
-	});
-
-	app.router.route("/company_profile", function(){                 
-		app.view.layout.showIn("#content", app.view.company_profile);
-		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
-
-		var vm = app.company_profile;
-		if(app.pageLoaded["company_profile"]==undefined){
-			app.pageLoaded["company_profile"] = true;
 		}
 
 		vm.pageLoad();        
