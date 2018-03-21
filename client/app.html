@@ -592,7 +592,8 @@
 </script>
 <script id="sales-category-template" type="text/x-kendo-tmpl">
 	<div class="product" data-bind="click: showProduct">
-		<img src="http://demos.telerik.com/kendo-ui/content/web/Employees/#:id#.jpg" alt="#:name# image" />
+		<!-- <img src="http://demos.telerik.com/kendo-ui/content/web/Employees/#:id#.jpg" alt="#:name# image" /> -->
+		<img src="#:image_url#" alt="#:name# image" />
 		<h3>#:name#</h3>
 	</div>
 </script>
@@ -1408,6 +1409,20 @@
 			<fieldset class="form-group">
 				<label class="form-label semibold" for="exampleInput">Category Name</label>
 				<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.description" placeholder="Description...">
+			</fieldset>
+		</div>
+		<div class="col-lg-4">
+			<fieldset class="form-group">
+				<img width="120px" data-bind="attr: { src: obj.image_url }" style="margin-bottom: 15px; border: 1px solid #ddd;">
+													
+				<input id="files" name="files"
+						type="file"
+						data-role="upload"
+						data-multiple="false"
+						data-show-file-list="false"
+						data-bind="events: { 
+							select: onSelect
+						}">
 			</fieldset>
 		</div>
 	</div>
@@ -2876,49 +2891,6 @@
 			this.set("key", "");
 			this.set("rawFile", "");
 		},
-	    saveAttachment 	 	: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){
-		    	if(!value.id){
-			    	var params = { 
-		            	Body: value.file, 
-		            	Key: value.key 
-		            };
-		            bucket.upload(params, function (err, data) {
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
-	            	});
-            	}
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-            	//Delete File
-            	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
-							});
-						});
-	            	}
-            	}
-            });
-	    },
 		generateNumber 		: function(){
 			var self = this, where = {},
 				obj = this.get("obj");
@@ -3154,7 +3126,79 @@
 		dataSource      	: dataStore(apiUrl + "categories"),
 		title 				: "Manage Category",
 		obj 				: [],
+		key 					: "",
+		rawFile 				: "",
 		pageLoad 			: function(){},
+		//Upload
+		onSelect 				: function(e){
+	        // Array with information about the uploaded files
+	        var files = e.files[0],
+				obj = this.get("obj"),
+				validating = true;
+
+	        var fileReader = new FileReader();
+	        fileReader.onload = function (event) {
+	            var mapImage = event.target.result;
+				obj.set("image_url", mapImage);
+	        }
+			fileReader.readAsDataURL(files.rawFile);
+			
+			//Check file size
+			if(files.size > 2000000){
+				validating = false;
+
+				app.source.warningAlert("Image max size 2MB.");
+			}
+
+			// Check the extension of each file and abort the upload if it is not .jpg	       
+			if (files.extension.toLowerCase() === ".jpg"
+				|| files.extension.toLowerCase() === ".jpeg"
+				|| files.extension.toLowerCase() === ".tiff"
+				|| files.extension.toLowerCase() === ".png" 
+				|| files.extension.toLowerCase() === ".gif"){
+			}else{
+				validating = false;
+
+				app.source.warningAlert("Image type not support");
+			}
+
+			if(validating){
+				var key = 'CAT_' + app.companyData.id + "_" + Math.floor(Math.random() * 100000000000000001) + files.extension.toLowerCase();
+
+				this.set("key", key);
+				this.set("rawFile", files.rawFile);
+			}
+	    },
+		uploadFile 			: function(){
+			var obj = this.get("obj"),
+				key = this.get("key"),
+				rawFile = this.get("rawFile");
+
+			// Configure client for use with Spaces
+			const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
+			const s3 = new AWS.S3({
+				endpoint: spacesEndpoint,
+				accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
+				secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
+			});
+
+			// Add a file to Space
+			var params = {
+				ACL: "public-read",
+				Body: rawFile, 
+				Bucket: "aijazspace/pos", 
+				Key: key
+			};
+
+			s3.putObject(params, function(err, data) {
+				if (err) console.log(err, err.stack); // an error occurred
+				else console.log(data); // successful response
+			});
+			
+			obj.set("image_url", "https://aijazspace." + app.space +"/pos/"+ key);
+			this.set("key", "");
+			this.set("rawFile", "");
+		},
 		edit 				: function(e){
 			var data = e.data;
 			
@@ -3163,14 +3207,25 @@
 		add				: function(){
 			var obj = this.get("obj");
 
+			//Upload
+			if(this.get("rawFile")!==""){
+				this.uploadFile();
+			}
+
 			this.dataSource.add({
 				name 			: obj.name,
-				description 	: obj.description
+				description 	: obj.description,
+				image_url 		: obj.image_url
 			});
 
 			this.dataSource.sync();
 		},
 		update 			: function(){
+			//Upload
+			if(this.get("rawFile")!==""){
+				this.uploadFile();
+			}
+
 			this.dataSource.sync();
 		},
 		delete 			: function(e){
