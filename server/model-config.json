@@ -74,5 +74,9 @@
   "unit_of_measurements": {
     "dataSource": "posDS",
     "public": true
+  },
+  "sale_sessions": {
+    "dataSource": "posDS",
+    "public": true
   }
 }

@@ -129,6 +129,12 @@
 	                <i class="font-icon font-icon-home"></i>
 	                <span class="lbl">ពត៌មាន</span>
 	            </a>
+			</li>
+			<li class="purple">
+	            <a href="#/sale_sessions">
+	                <i class="font-icon font-icon-notebook"></i>
+	                <span class="lbl">ប្តូរវេនលក់</span>
+	            </a>
 	        </li>
 	        <li class="blue-darker">
 	            <a href="#/sales">
@@ -1522,6 +1528,68 @@
 		style="height: 200px">
 	</div>
 				 
+
+</script>
+
+<script id="sale_sessions" type="text/x-kendo-template">
+	
+
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+							<h2 data-bind="text: title"></h2>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+							<button type="button" class="action-btn" data-bind="click: save">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+
+				<div class="row-fluid">
+					<div class="col-lg-4">
+						<div>
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="exampleInput">Start Amount</label>
+								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
+							</fieldset>
+						</div>
+						<div>
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="exampleInput">Start Time</label>
+								<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
+							</fieldset>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div>
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="exampleInput">End Amount</label>
+								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
+							</fieldset>
+						</div>
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="exampleInput">End Time</label>
+								<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				
+			</div><!--.box-typical-body-->
+		</section>
+	</div>
+
+	
 
 </script>
 
@@ -3324,6 +3392,77 @@
 			this.dataSource.sync();
 		}
 	});
+
+	app.sale_sessions = kendo.observable({
+		dataSource      	: dataStore(apiUrl + "sale_sessions"),
+		title 				: "ប្តូរវេនលក់",
+		obj 				: [],
+		editMode 			: false,
+		pageLoad        	: function(){
+			var self = this;
+
+			this.dataSource.query({
+				filter:[
+					{ field:"user_id", value: app.userData.userId },
+					{ field:"status", value: 0 }
+				],
+				page: 1,
+				pageSize:1
+			}).then(function(){
+				var view = self.dataSource.view();
+				
+				self.set("editMode", false);
+				if(view.length>0){
+					self.set("editMode", true);
+					self.set("obj", view[0]);
+				}else{
+					self.addObj();
+				}
+			});
+		},
+		addObj				: function(){
+			this.set("obj", []);
+			this.set("editMode", false);
+
+			this.dataSource.insert(0, {
+				user_id 			: app.userData.userId,
+				start_amount		: 0,
+				end_amount			: 0,
+				start_at			: new Date(),
+				end_at				: new Date(),
+				status				: 0
+			});
+
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+		},
+		save 			: function(){
+			var self = this, 
+				obj = this.get("obj");
+			
+			if(obj.isNew()==false){
+				obj.set("status", 1);
+			}
+
+			this.dataSource.sync();
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="create"){
+					self.set("editMode", true);
+				}
+
+				if(e.type=="update"){
+					self.clear();
+					self.addObj();
+				}
+			});
+
+			
+		},
+		clear 						: function(){
+			this.dataSource.cancelChanges();
+			this.dataSource.data([]);
+		}
+	});
 	
 	/* Views & Layout */
 	app.view = {
@@ -3356,6 +3495,8 @@
 
 		//taxes
 		taxes: new kendo.Layout("#taxes", {model: app.taxes}),
+
+		sale_sessions: new kendo.Layout("#sale_sessions", {model: app.sale_sessions}),
 		
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
@@ -3577,6 +3718,17 @@
 		var vm = app.taxes;
 		if(app.pageLoaded["taxes"]==undefined){
 			app.pageLoaded["taxes"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/sale_sessions", function(){                 
+		app.view.layout.showIn("#content", app.view.sale_sessions);
+
+		var vm = app.sale_sessions;
+		if(app.pageLoaded["sale_sessions"]==undefined){
+			app.pageLoaded["sale_sessions"] = true;
 		}
 
 		vm.pageLoad();        
