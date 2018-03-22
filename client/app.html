@@ -1627,6 +1627,7 @@
 	app.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	app.companyData = JSON.parse(localStorage.getItem('userData/company')) ? JSON.parse(localStorage.getItem('userData/company')) : "";
 	app.emptyString = "";
+	app.noImage = "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg";
 	app.space = "sgp1.digitaloceanspaces.com";
 	kendo.culture(app.companyData.locale);
 	function currencyFormat(amount){
@@ -1962,6 +1963,7 @@
 	************************************************/
 	app.users = kendo.observable({
 		companyUserDS 		: dataStore(apiUrl + "company_users"),
+		contactDS 			: dataStore(apiUrl + "contacts"),
 		roleList 			: app.source.roleList,
 		obj 				: [],
 		pageLoad        	: function(){},
@@ -2079,6 +2081,7 @@
 					if(result){
 						self.addCompanyUser(result.data.id);
 						self.assignRole(result.data.id);
+						self.addEmployee(result.data.id);
 					}				
 				}).fail(function(err) {
 					app.source.dangerAlert("Status Code: " + err.responseJSON.error.statusCode + "<br>" + "Message: " + err.responseJSON.error.message);
@@ -2108,6 +2111,24 @@
 				self.setObj();
 				app.source.successAlert();
 			});
+		},
+		addEmployee 		: function(id){
+			var obj = this.get("obj");
+
+			this.contactDS.add({
+				user_id 	: app.userData.userId,
+				number 		: obj.number,
+				name 		: obj.name,
+				type 		: "employee",
+				gender 		: obj.gender,
+				phone 		: obj.phone,
+				date_of_birth : obj.date_of_birth,
+				date_registered : obj.date_registered,
+				status 		: 1,
+				address 	: obj.address,
+				note 		: obj.note
+			});
+			this.companyUserDS.sync();
 		}
 	});
 	app.userList = kendo.observable({
@@ -2943,7 +2964,7 @@
 				cost 					: 0,
 				price 					: 0,
 				description 			: "",
-				image_url 				: "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg",
+				image_url 				: app.noImage,
 				thumbnail_url 			: "",
 				favorite 				: 0
 			});
@@ -3126,8 +3147,8 @@
 		dataSource      	: dataStore(apiUrl + "categories"),
 		title 				: "Manage Category",
 		obj 				: [],
-		key 					: "",
-		rawFile 				: "",
+		key 				: "",
+		rawFile 			: "",
 		pageLoad 			: function(){},
 		//Upload
 		onSelect 				: function(e){
