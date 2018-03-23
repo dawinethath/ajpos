@@ -1532,8 +1532,6 @@
 </script>
 
 <script id="sale_sessions" type="text/x-kendo-template">
-	
-
 	<div class="container-fluid">
 		<section class="box-typical">
 			<header class="box-typical-header">
@@ -1554,42 +1552,41 @@
 				</div>
 			</header>
 			<div class="box-typical-body">
-
-				<div class="row-fluid">
-					<div class="col-lg-4">
-						<div>
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput">Start Amount</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
-							</fieldset>
-						</div>
-						<div>
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput">Start Time</label>
-								<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
-							</fieldset>
-						</div>
+					<div class="table-responsive">
+						<table class="table gridBorderless">						
+							<tr>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Amount</label>
+											<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Time</label>
+											<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
+									</fieldset>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Amount</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Time</label>
+										<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
+									</fieldset>
+								</td>
+							</tr>
+						</table>
 					</div>
-					<div class="col-lg-4">
-						<div>
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput">End Amount</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
-							</fieldset>
-						</div>
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput">End Time</label>
-								<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
-							</fieldset>
-						</div>
-					</div>
-				</div>
-				
-			</div><!--.box-typical-body-->
+				</div><!--.row-->
 		</section>
 	</div>
-
-	
 
 </script>
 
