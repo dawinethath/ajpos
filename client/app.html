@@ -133,7 +133,7 @@
 			<li class="purple">
 	            <a href="#/sale_sessions">
 	                <i class="font-icon font-icon-notebook"></i>
-	                <span class="lbl">ប្តូរវេនលក់</span>
+	                <span class="lbl">វេនលក់</span>
 	            </a>
 	        </li>
 	        <li class="blue-darker">
@@ -1586,8 +1586,12 @@
 					</div>
 				</div><!--.row-->
 		</section>
+<<<<<<< HEAD
 	</div>
 
+=======
+	</div
+>>>>>>> ac5ecc8c989f75248a75240bd6956a7d8529317e
 </script>
 
 <!-- ********************************************
@@ -2027,8 +2031,8 @@
 	*  User MVVM   								*
 	************************************************/
 	app.users = kendo.observable({
-		companyUserDS 		: dataStore(apiUrl + "company_users"),
-		contactDS 			: dataStore(apiUrl + "contacts"),
+		dataSource 			: dataStore(apiUrl + "contacts"),
+		companyUserDS 		: dataStore(apiUrl + "company_users"),		
 		roleList 			: app.source.roleList,
 		obj 				: [],
 		pageLoad        	: function(){},
@@ -2180,20 +2184,20 @@
 		addEmployee 		: function(id){
 			var obj = this.get("obj");
 
-			this.contactDS.add({
-				user_id 	: app.userData.userId,
-				number 		: obj.number,
-				name 		: obj.name,
-				type 		: "employee",
-				gender 		: obj.gender,
-				phone 		: obj.phone,
-				date_of_birth : obj.date_of_birth,
+			this.dataSource.add({
+				user_id 		: id,
+				number 			: obj.number,
+				name 			: obj.name,
+				type 			: "employee",
+				gender 			: obj.gender,
+				phone 			: obj.phone,
+				date_of_birth 	: obj.date_of_birth,
 				date_registered : obj.date_registered,
-				status 		: 1,
-				address 	: obj.address,
-				note 		: obj.note
+				status 			: 1,
+				address 		: obj.address,
+				note 			: obj.note
 			});
-			this.companyUserDS.sync();
+			this.dataSource.sync();
 		}
 	});
 	app.userList = kendo.observable({
@@ -3392,7 +3396,7 @@
 
 	app.sale_sessions = kendo.observable({
 		dataSource      	: dataStore(apiUrl + "sale_sessions"),
-		title 				: "ប្តូរវេនលក់",
+		title 				: "វេនលក់",
 		obj 				: [],
 		editMode 			: false,
 		pageLoad        	: function(){
