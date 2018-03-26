@@ -160,12 +160,6 @@
 	                <span class="lbl">របាយការណ៍</span>
 	            </a>
 			</li>
-			<li class="magenta">
-	            <a href="#/user_list">
-	                <i class="font-icon font-icon-user"></i>
-	                <span class="lbl">អ្នកប្រើប្រាស់</span>
-	            </a>
-	        </li>
 	        <li class="coral">
 	            <a href="#/settings">
 	                <i class="font-icon font-icon-cogwheel"></i>
@@ -341,7 +335,7 @@
 						</div>
 						<div class="col-lg-4">
 							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់</label>
+								<label class="form-label" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់ជាអក្សរឡាតាំង</label>
 								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.username" placeholder="Username">
 							</fieldset>
 						</div>
@@ -349,6 +343,18 @@
 							<fieldset class="form-group">
 								<label class="form-label" for="exampleInputPassword1" style="text-align: left;">លេខសំងាត់</label>
 								<input type="text" class="form-control" id="exampleInputPassword1" data-bind="value: obj.password" placeholder="Password">
+							</fieldset>
+						</div>
+						<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label" for="exampleInput" style="text-align: left;">នាម និង គោត្តនាម</label>
+								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.name" placeholder="Name">
+							</fieldset>
+						</div>
+						<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label" for="exampleInput" style="text-align: left;">លេខទូរស័ព្ទ</label>
+								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.phone" placeholder="Phone">
 							</fieldset>
 						</div>
 					</div>
@@ -393,8 +399,8 @@
 								noRecords: 'ពុំមានទិន្នន័យ'
 							}"
 							data-columns="[
-								{ field: 'User.username', title: 'ឈ្មោះ' },
-								{ field: 'User.email', title: 'អុីមែល' },
+								{ field: 'name', title: 'ឈ្មោះ' },
+								{ field: 'phone', title: 'លេខទូរស័ព្ទ' },
 								{ field: 'status', title: 'ស្ថានភាព' },
 								{
 									title: '',
@@ -619,7 +625,7 @@
 
 					<!-- Receipt Detail -->
 					<div class="table-responsive">
-						<div data-role="grid"
+						<div id="grid" data-role="grid"
 							data-column-menu="true"
 							data-reorderable="true"
 							data-scrollable="true"
@@ -1272,6 +1278,13 @@
 				<td>
 					<a href="#/company_profile">
 						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">Company Profile</button>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="#/user_list">
+						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">អ្នកប្រើប្រាស់</button>
 					</a>
 				</td>
 			</tr>
@@ -2026,7 +2039,7 @@
 	*  User MVVM   								*
 	************************************************/
 	app.users = kendo.observable({
-		dataSource 			: dataStore(apiUrl + "contacts"),
+		dataSource 			: dataStore(apiUrl + "employees"),
 		companyUserDS 		: dataStore(apiUrl + "company_users"),		
 		roleList 			: app.source.roleList,
 		obj 				: [],
@@ -2183,48 +2196,22 @@
 				user_id 		: id,
 				number 			: obj.number,
 				name 			: obj.name,
-				type 			: "employee",
-				gender 			: obj.gender,
+				type 			: "user",
+				gender 			: "M",
 				phone 			: obj.phone,
-				date_of_birth 	: obj.date_of_birth,
-				date_registered : obj.date_registered,
-				status 			: 1,
-				address 		: obj.address,
-				note 			: obj.note
+				date_registered : new Date(),
+				status 			: 1
 			});
 			this.dataSource.sync();
 		}
 	});
 	app.userList = kendo.observable({
-		dataSource 	 		: new kendo.data.DataSource({
-			transport: {
-				read:  {
-					url: apiUrl + "company_users/user_list?access_token=" + app.userData.id,
-					type: "GET",
-					dataType: "json",
-					data:  {
-						companyId : app.companyData.id
-					}
-				}
-			},
-			schema: {
-				model: { id: "id" },	  
-				data: "data",
-				total: "total"
-			},
-			page:1,
-			pageSize:100,
-			serverPaging:true,
-			serverSorting:true,
-			serverFiltering:true
-		}),
+		dataSource 			: dataStore(apiUrl + "employees"),
 		roleList 			: app.source.roleList,
 		obj 				: [],
 		windowVisible 		: false,
 		resetPasswordVisible: false,
-		pageLoad        	: function(){
-			this.dataSource.read();
-		},
+		pageLoad        	: function(){},
 		edit 				: function(e){
 			var data = e.data;
 
@@ -3583,24 +3570,8 @@
 			// Numpad
 			$('#txtReceiveAmount').keyboard({type:'numpad'});
 
-			vm.stockDS.insert(0, {
-				transaction_id 		: 0,
-				product_id 			: 0,
-				description 		: 0,
-				quantity 			: 1,
-				movement 			: -1,
-				price 				: 0,
-				discount 			: 0,
-				discount_percentage	: 0,
-				amount 				: 0,
-				tax 				: 0,
-
-				products 			: [],
-				taxes 				: []
-			});
-
-			var obj = vm.stockDS.at(0);
-			vm.stockDS.remove(obj);
+			var grid = $("#grid").data("kendoGrid");
+			grid.refresh();
 		}
 		vm.pageLoad(id);        
 	});
