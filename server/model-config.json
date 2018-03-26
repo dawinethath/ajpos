@@ -78,5 +78,9 @@
   "sale_sessions": {
     "dataSource": "posDS",
     "public": true
+  },
+  "employees": {
+    "dataSource": "posDS",
+    "public": true
   }
 }
