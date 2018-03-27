@@ -65,6 +65,11 @@
       "type": "belongsTo",
       "model": "contacts",
       "foreignKey": "contact_id"
+    },
+    "employees": {
+      "type": "belongsTo",
+      "model": "employees",
+      "foreignKey": "employee_id"
     }
   },
   "acls": [
