@@ -1504,6 +1504,269 @@
 
 </script>
 
+<script id="contacts" type="text/x-kendo-template">
+	<h2 data-bind="text: title"></h2>
+
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>Company Profile</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" data-bind="click: save">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="table-responsive">
+					<table class="table gridBorderless">
+						<tr>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Number</label>
+									<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.number" placeholder="Number...">
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Name</label>
+									<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.name" placeholder="Name...">
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Gender</label>
+									<input data-role="dropdownlist" 
+									data-value-primitive="true"
+									data-text-field=""
+									data-value-field=""
+									data-bind="value: obj.gender,
+											   source: gender" style="width:100%"/>
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Phone</label>
+									<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.phone" placeholder="Phone...">
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Date of Birth</label>
+									<input data-role="datetimepicker" data-bind="value: obj.date_of_birth" style="width:100%">
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Date of Birth</label>
+									<input data-role="datepicker" data-bind="value: obj.date_of_birth" style="width:100%">
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Address</label>
+									<textarea cols="50" rows="3" class="form-control" id="exampleInput" data-bind="value: obj.address" placeholder="Address..."></textarea>
+								</fieldset>
+							</td>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Note</label>
+									<textarea cols="50" rows="3" class="form-control" id="exampleInput" data-bind="value: obj.note" placeholder="Note..."></textarea>
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
+							<td width="25%">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Status</label>
+									<input data-role="dropdownlist" 
+										data-value-primitive="true"
+										data-text-field="text"
+										data-value-field="value"
+										data-bind="value: obj.status,
+												   source: statusList" style="width:100%"/>
+								</fieldset>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div><!--.row-->
+		</section>
+	</div>			 
+
+</script>
+
+<script id="contact_list" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="typeahead-container">
+									<div class="typeahead-field">
+										<span class="typeahead-query">
+											<input id="typeahead-search-country-v1" class="form-control" name="q" type="search" data-bind="value: txtSearch" autocomplete="off">
+										</span>
+										<span class="typeahead-button">
+											<button data-bind="click: search">
+												<span class="font-icon-search"></span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+							</div>
+						</div>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<a href="#/contacts">
+						<button type="button" class="action-btn">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</button>
+						</a>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-editable="true"
+						data-columns="[
+							{ field: 'number', title: 'លេខកូដ' },
+							{ field: 'name', title: 'ឈ្មោះ​អតិថិជន' },
+							{ field: 'gender', title: 'ភេទ' },
+							{ field: 'phone', title: 'លេខទូរសព្ទ' },
+							{ field: 'date_of_birth', title: 'ថ្ងៃខែ​ឆ្នាំ​កំណើត', template: '#=dateFormat(date_of_birth)#' },
+							{ field: 'date_registered', title: 'កាលបរិច្ឆេទចុះបញ្ជី', template: '#=dateFormat(date_registered)#' },
+							{ field: 'status', title: 'ស្ថានភាព' },
+							{ field: 'address', title: 'អាសយដ្ឋាន' },
+							{ field: 'note', title: 'ចំណាំ' },
+							{
+								title: '',
+								template:kendo.template($('#contactList-actions-tmpl').html()),
+								width: 50
+							}
+						]"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+<script id="contactList-actions-tmpl" type="text/x-kendo-tmpl">	
+	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: edit">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</button>
+</script>
+
+<script id="sale_by_employee" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<input data-role="dropdownlist"        
+								data-value-primitive="true"
+								data-text-field="text"
+								data-value-field="value"
+								data-bind="value: sorter,
+										source: sortList,
+										events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+								class="sdate"
+								data-format="dd-MM-yyyy"
+								data-bind="value: sdate"
+								placeholder="ចាប៉ពី ..." >
+
+						<input data-role="datepicker"
+								class="edate"
+								data-format="dd-MM-yyyy"
+								data-bind="value: edate"
+								placeholder="ដល់ ..." >
+
+						<span class="typeahead-query">
+							<input id="typeahead-search-country-v1" class="form-control" name="q" type="search" data-bind="value: txtSearch" autocomplete="off">
+						</span>
+
+						<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<a href="#/sales">
+						<button type="button" class="action-btn">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</button>
+						</a>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-columns="[
+							{ field: 'transaction_date',title: 'កាលបរិច្ឆេទ', template: '#=dateFormat(transaction_date)#' },
+							{ field: 'number', title: 'លេខកូដ' },
+							{ field: 'type', title: 'ប្រភេទ' },
+							{ field: 'amount', title: 'ទឹកប្រាក់', template: '#=currencyFormat(amount)#' },
+							{ field: 'employee_id', title: 'បុគ្គលិក' },
+							{ 
+								field: 'transaction_status', 
+								title: 'ស្ថានភាព',
+								template:kendo.template($('#transactionList-status-template').html()) 
+							}
+						]"
+						data-auto-bind="false"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+
 <!-- ********************************************
 *   Template List Section     					*
 ********************************************* -->
@@ -3295,6 +3558,204 @@
 			this.dataSource.data([]);
 		}
 	});
+
+	app.contacts = kendo.observable({
+		dataSource      	: dataStore(apiUrl + "contacts"),
+		statusList			: app.source.statusList,
+		title 				: "Manage contacts",
+		gender				: ["Male", "Female"],
+		editMode			: false,
+		obj 				: [],
+		pageLoad 			: function(id){
+			var self = this;
+
+			if(id){
+				this.set("editMode", true);
+				this.loadObj(id);
+			}else{
+				if(this.get("editMode") || this.dataSource.total()==0){
+					this.addObj();
+				}
+			};
+		},
+		loadObj 			: function(id){
+			var self = this;
+
+			this.dataSource.query({
+				filter: { where: {id : id} },
+				page: 1,
+				pageSize: 1
+			}).then(function(){
+				var view = self.dataSource.view();
+
+				self.set("obj", view[0]);
+			});
+		},
+		addObj				: function(){
+			this.set("obj", []);
+			
+			this.dataSource.insert(0, {
+				user_id			: "",
+				number 			: "",
+				name 			: "",
+				gender			: "",
+				phone			: "",
+				date_of_birth	: new Date(),
+				date_registered : new Date(),
+				status			: 1,
+				address			: "",
+				note			: ""
+			});
+
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+		},
+		save 			: function(){
+			var self = this;
+
+			this.dataSource.sync();
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="create"){
+					self.clear();
+					self.addObj();
+				}
+			});
+		},
+		clear 						: function(){
+			this.dataSource.cancelChanges();
+			this.dataSource.data([]);
+		}
+	});
+
+	app.contact_list = kendo.observable({
+		dataSource      	: dataStore(apiUrl + "contacts"),
+		title 				: "Manage contacts",
+		txtSearch 			: "",
+		obj 				: [],
+		pageLoad 			: function(){
+			this.search();
+		},
+		edit 					: function(e){
+			var data = e.data;
+
+			app.router.navigate('/contacts/' + data.id);
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+        		txtSearch = this.get("txtSearch");
+
+			if(txtSearch){
+            	where.or = [
+                    { name : {like: txtSearch} }
+                ]
+            }
+            
+            this.dataSource.query({
+            	filter: { where },
+				sort: { field:"name", dir: "ASC" },
+                page:1,
+                pageSize:10
+            }).then(function(){
+            	// var view = self.dataSource.view();
+            });
+
+        	txtSearch = this.set("txtSearch", "");
+		}	
+	});
+
+	app.sale_by_employee = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "transactions"),
+		sortList				: app.source.sortList,
+		sorter 					: "today",
+		sdate 					: "",
+		edate 					: "",
+		pageLoad        		: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+				start = this.get("sdate"),
+        		end = this.get("edate");
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+            	where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lte": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(start){
+            	start = new Date(start);
+            	end = new Date(start);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+				where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(end){
+            	end = new Date(end);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+        		
+            	where.transaction_date = {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")};
+            }else{}
+            
+            this.dataSource.query({
+            	filter:[ 
+					{ where },
+					{ include: "employees"	}
+				],
+				sort: { field:"transaction_date", dir: "DESC" },
+                page:1,
+                pageSize:10
+            }).then(function(){
+            	// var view = self.dataSource.view();
+            });
+		}
+	});
 	
 	/* Views & Layout */
 	app.view = {
@@ -3328,6 +3789,12 @@
 		taxes: new kendo.Layout("#taxes", {model: app.taxes}),
 
 		sale_sessions: new kendo.Layout("#sale_sessions", {model: app.sale_sessions}),
+
+		contacts: new kendo.Layout("#contacts", {model: app.contacts}),
+
+		contact_list: new kendo.Layout("#contact_list", {model: app.contact_list}),
+
+		sale_by_employee: new kendo.Layout("#sale_by_employee", {model: app.sale_by_employee}),
 
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
@@ -3547,6 +4014,41 @@
 		var vm = app.sale_sessions;
 		if(app.pageLoaded["sale_sessions"]==undefined){
 			app.pageLoaded["sale_sessions"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/contacts(/:id)", function(id){                 
+		app.view.layout.showIn("#content", app.view.contacts);
+
+		var vm = app.contacts;
+		if(app.pageLoaded["contacts"]==undefined){
+			app.pageLoaded["contacts"] = true;
+		}
+
+		vm.pageLoad(id);        
+	});
+
+	app.router.route("/contact_list", function(){                 
+		app.view.layout.showIn("#content", app.view.contact_list);
+
+		var vm = app.contact_list;
+		if(app.pageLoaded["contact_list"]==undefined){
+			app.pageLoaded["contact_list"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/sale_by_employee", function(){                 
+		app.view.layout.showIn("#content", app.view.sale_by_employee);
+
+		var vm = app.sale_by_employee;
+		if(app.pageLoaded["sale_by_employee"]==undefined){
+			app.pageLoaded["sale_by_employee"] = true;
+
+			vm.sorterChanges();
 		}
 
 		vm.pageLoad();        
