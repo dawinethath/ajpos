@@ -94,7 +94,7 @@
 								<img src="assets/img/avatar-2-64.png" alt="">
 							</button>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-								<a class="dropdown-item" href="#/users"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+								<a class="dropdown-item" href="#/staff"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
 								<a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 								<a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
 								<div class="dropdown-divider"></div>
@@ -290,199 +290,8 @@
 		</div>
 	</div><!--.container-fluid-->
 </script>
-<script type="text/x-kendo-template" id="users">
-	<div class="container-fluid">
-		<section class="box-typical">
-			<header class="box-typical-header">
-				<div class="tbl-row">
-					<div class="tbl-cell tbl-cell-title">
-						<h3>អ្នកប្រើប្រាស់</h3>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" data-bind="click: save">
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</button>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</div>
-				</div>
-			</header>
-			<div class="box-typical-body">
-				<div class="box-typical">
-					<br>
-					<div class="row-fluid" align="center">
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputRole" style="text-align: left;">តួនាទី</label>
-								<input id="exampleInputRole"
-									data-role="dropdownlist"
-									data-value-primitive="true"
-									data-text-field="text"
-									data-value-field="value"
-									data-bind="value: obj.role_id,
-												source: roleList"
-									style="width: 100%;" />
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputEmail1" style="text-align: left;">អុីម៉ែល</label>
-								<input type="email" class="form-control" id="exampleInputEmail1" data-bind="value: obj.email" placeholder="Enter email">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់ជាអក្សរឡាតាំង</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.username" placeholder="Username">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputPassword1" style="text-align: left;">លេខសំងាត់</label>
-								<input type="text" class="form-control" id="exampleInputPassword1" data-bind="value: obj.password" placeholder="Password">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInput" style="text-align: left;">នាម និង គោត្តនាម</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.name" placeholder="Name">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInput" style="text-align: left;">លេខទូរស័ព្ទ</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.phone" placeholder="Phone">
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</div><!--.row-->
-		</section>
-	</div><!--.container-fluid-->
-</script>
-<script type="text/x-kendo-template" id="userList">
-	<div class="container-fluid">
-		<section class="box-typical">
-			<header class="box-typical-header">
-				<div class="tbl-row">
-					<div class="tbl-cell tbl-cell-title">
-						<h3>តារាងអ្នកប្រើប្រាស់</h3>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<a href="#/users">
-							<button type="button" class="action-btn">
-								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							</button>
-						</a>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</div>
-				</div>
-			</header>
-			<div class="box-typical-body">
-				<div class="box-typical">
-					<div class="table-responsive">
-						<div data-role="grid"
-							data-column-menu="true"
-							data-reorderable="true"
-							data-scrollable="true"
-							data-resizable="true"
-							data-pageable="true"
-							data-no-records="true"
-							data-messages="{
-								noRecords: 'ពុំមានទិន្នន័យ'
-							}"
-							data-columns="[
-								{ field: 'name', title: 'ឈ្មោះ' },
-								{ field: 'phone', title: 'លេខទូរស័ព្ទ' },
-								{ field: 'status', title: 'ស្ថានភាព' },
-								{
-									title: '',
-									template:kendo.template($('#userList-actions-tmpl').html())
-								}
-							]"
-							data-auto-bind="false"
-							data-bind="source: dataSource"></div>
-					</div>
 
-					<div data-role="window"
-							data-title="ផ្ដូរតួនាទីថ្មី"
-							data-width="350"
-							data-height="131"
-							data-iframe="true"
-							data-modal="true"
-							data-visible="false"
-							data-position="{top:'40%',left:'35%'}"
-							data-actions="{}"
-							data-resizable="false"
-							data-bind="visible: windowVisible"
-							style="text-align:center;">
-
-						<fieldset class="form-group">
-							<input id="exampleInputRole"
-								data-role="dropdownlist"
-								data-value-primitive="true"
-								data-text-field="text"
-								data-value-field="value"
-								data-bind="value: obj.role_id,
-											source: roleList"
-								data-option-label="---សូមជ្រើសរើស---"
-								style="width: 100%;" />
-						</fieldset>
-
-						<div class="form-group">
-							<button type="button" class="btn btn-inline btn-primary" data-bind="click: save">កត់ត្រា</button>
-							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeWindow">បោះបង់</button>
-						</div>
-
-					</div>
-
-					<div data-role="window"
-							data-title="ប្ដូរលេខសំងាត់ថ្មី"
-							data-width="350"
-							data-height="131"
-							data-iframe="true"
-							data-modal="true"
-							data-visible="false"
-							data-position="{top:'40%',left:'35%'}"
-							data-actions="{}"
-							data-resizable="false"
-							data-bind="visible: resetPasswordVisible"
-							style="text-align:center;">
-
-						<fieldset class="form-group">
-							<input type="text" class="form-control" 
-								data-bind="value: obj.newPassword"
-								placeholder="លេខសំងាត់ថ្មី..."
-								style="width: 100%;" />
-						</fieldset>
-
-						<div class="form-group">
-							<button type="button" class="btn btn-inline btn-primary" data-bind="click: savePassword">កត់ត្រា</button>
-							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeResetPassword">បោះបង់</button>
-						</div>
-
-					</div>
-				</div>
-			</div><!--.row-->
-		</section>
-	</div><!--.container-fluid-->
-</script>
-<script id="userList-actions-tmpl" type="text/x-kendo-tmpl">	
-	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: edit">
-		<span class="glyphicon glyphicon-pencil"></span>
-	</button>
-	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: reset">
-		<span class="glyphicon glyphicon-asterisk"></span>
-	</button>
-</script>
-
+<!-- SALE -->
 <script id="sales" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<div class="row">
@@ -616,7 +425,6 @@
 		<h3>#:name# <br><br> #=currencyFormat(price)#</h3>
 	</div>
 </script>
-
 <script id="checkout" type="text/x-kendo-template">
 	<div id="example">
 		<div class="container-fluid">
@@ -880,6 +688,7 @@
 	</div>
 </script>
 
+<!-- TRANSACTION -->
 <script id="transactionList" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
@@ -976,6 +785,7 @@
 	</div>
 </script>
 
+<!-- INVOICING -->
 <script id="invoicePos" type="text/x-kendo-template">
 
 	<div class="form-group no-print">
@@ -1062,6 +872,7 @@
 	</tr>
 </script>
 
+<!-- PRODUCT -->
 <script id="productList" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
@@ -1271,6 +1082,7 @@
 	</div><!--.container-fluid-->
 </script>
 
+<!-- SETTING -->
 <script id="settings" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<table>
@@ -1283,8 +1095,8 @@
 			</tr>
 			<tr>
 				<td>
-					<a href="#/user_list">
-						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">អ្នកប្រើប្រាស់</button>
+					<a href="#/staff_list">
+						<button type="button" class="btn btn-inline btn-primary" style="width:200px; text-align:left">គ្រប់គ្រងបុគ្គលិក</button>
 					</a>
 				</td>
 			</tr>
@@ -1313,6 +1125,305 @@
 	</div><!--.container-fluid-->
 </script>
 
+<!-- STAFF -->
+<script id="staff" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>បុគ្គលិក</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" data-bind="click: save">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<br>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row-fluid">
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputRole" style="text-align: left;">តួនាទី</label>
+										<input id="exampleInputRole"
+											data-role="dropdownlist"
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: obj.role_id,
+														source: roleList"
+											style="width: 100%;" />
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputEmail1" style="text-align: left;">អុីម៉ែល</label>
+										<input type="email" class="form-control" id="exampleInputEmail1" data-bind="value: obj.email" placeholder="Enter email">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់ជាអក្សរឡាតាំង</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.username" placeholder="Username">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputPassword1" style="text-align: left;">លេខសំងាត់</label>
+										<input type="text" class="form-control" id="exampleInputPassword1" data-bind="value: obj.password" placeholder="Password">
+									</fieldset>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="row-fluid">
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">នាម និង គោត្តនាម</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.name" placeholder="Name">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">លេខទូរស័ព្ទ</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.phone" placeholder="Phone">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ថ្ងៃចូលបំរើការងារ</label>
+										<input id="txnDate" name="txnDate"
+												class="form-control"
+												data-role="datepicker"
+												data-bind="value: obj.date_registered" 
+												required data-required-msg="required"
+												placeholder="Register date"
+												style="width: 100%;" />
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ស្ថានភាព</label>
+										<input class="form-control"
+											data-role="dropdownlist"
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: obj.status,
+														source: statusList"
+											style="width: 100%;" />
+									</fieldset>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+<script id="staffList" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>គ្រប់គ្រងបុគ្គលិក</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<a href="#/staff">
+							<button type="button" class="action-btn">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+						</a>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<div class="table-responsive">
+						<div data-role="grid"
+							data-column-menu="true"
+							data-reorderable="true"
+							data-scrollable="true"
+							data-resizable="true"
+							data-pageable="true"
+							data-no-records="true"
+							data-messages="{
+								noRecords: 'ពុំមានទិន្នន័យ'
+							}"
+							data-columns="[
+								{ field: 'name', title: 'ឈ្មោះ' },
+								{ field: 'gender', title: 'ភេទ' },
+								{ field: 'phone', title: 'លេខទូរស័ព្ទ' },
+								{ field: 'date_registered', title: 'ថ្ងៃចូលបំរើការងារ', template:'#=dateFormat(date_registered)#' },
+								{ 
+									field: 'status', 
+									title: 'ស្ថានភាព',
+									template:kendo.template($('#staffList-status-tmpl').html()) 
+								},
+								{
+									title: '',
+									template:kendo.template($('#staffList-actions-tmpl').html())
+								}
+							]"
+							data-bind="source: dataSource"></div>
+					</div>
+
+					<div data-role="window"
+							data-title="ផ្ដូរតួនាទីថ្មី"
+							data-width="350"
+							data-height="131"
+							data-iframe="true"
+							data-modal="true"
+							data-visible="false"
+							data-position="{top:'40%',left:'35%'}"
+							data-actions="{}"
+							data-resizable="false"
+							data-bind="visible: windowVisible"
+							style="text-align:center;">
+
+						<fieldset class="form-group">
+							<input id="exampleInputRole"
+								data-role="dropdownlist"
+								data-value-primitive="true"
+								data-text-field="text"
+								data-value-field="value"
+								data-bind="value: obj.role_id,
+											source: roleList"
+								data-option-label="---សូមជ្រើសរើស---"
+								style="width: 100%;" />
+						</fieldset>
+
+						<div class="form-group">
+							<button type="button" class="btn btn-inline btn-primary" data-bind="click: save">កត់ត្រា</button>
+							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeWindow">បោះបង់</button>
+						</div>
+
+					</div>
+
+					<div data-role="window"
+							data-title="ប្ដូរលេខសំងាត់ថ្មី"
+							data-width="350"
+							data-height="131"
+							data-iframe="true"
+							data-modal="true"
+							data-visible="false"
+							data-position="{top:'40%',left:'35%'}"
+							data-actions="{}"
+							data-resizable="false"
+							data-bind="visible: resetPasswordVisible"
+							style="text-align:center;">
+
+						<fieldset class="form-group">
+							<input type="text" class="form-control" 
+								data-bind="value: obj.newPassword"
+								placeholder="លេខសំងាត់ថ្មី..."
+								style="width: 100%;" />
+						</fieldset>
+
+						<div class="form-group">
+							<button type="button" class="btn btn-inline btn-primary" data-bind="click: savePassword">កត់ត្រា</button>
+							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeResetPassword">បោះបង់</button>
+						</div>
+
+					</div>
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+<script id="staffList-status-tmpl" type="text/x-kendo-tmpl">	
+	#if(status==1){#
+		កំពុងបំរើការងារ
+	#}else{#
+		ឈប់ពីការងារ
+	#}#
+</script>
+<script id="staffList-actions-tmpl" type="text/x-kendo-tmpl">	
+	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: edit">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</button>
+	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: reset">
+		<span class="glyphicon glyphicon-asterisk"></span>
+	</button>
+</script>
+
+<!-- SALE SESSION -->
+<script id="sale_sessions" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+							<h2 data-bind="text: title"></h2>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+							<button type="button" class="action-btn" data-bind="click: save">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+					<div class="table-responsive">
+						<table class="table gridBorderless">						
+							<tr>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Amount</label>
+											<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Time</label>
+											<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
+									</fieldset>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Amount</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Time</label>
+										<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
+									</fieldset>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div><!--.row-->
+		</section>
+	</div>
+</script>
+
+<!-- COMPANY -->
 <script id="company_profile" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
@@ -1414,6 +1525,7 @@
 	</div><!--.container-fluid-->
 </script>
 
+<!-- CATEGORY -->
 <script id="category" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1465,6 +1577,7 @@
 
 </script>
 
+<!-- UOM -->
 <script id="unit_of_measurements" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1504,6 +1617,7 @@
 
 </script>
 
+<!-- TAX -->
 <script id="taxes" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1542,64 +1656,6 @@
 	</div>
 				 
 
-</script>
-
-<script id="sale_sessions" type="text/x-kendo-template">
-	<div class="container-fluid">
-		<section class="box-typical">
-			<header class="box-typical-header">
-				<div class="tbl-row">
-					<div class="tbl-cell tbl-cell-title">
-							<h2 data-bind="text: title"></h2>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-							<button type="button" class="action-btn" data-bind="click: save">
-								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-							</button>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</div>
-				</div>
-			</header>
-			<div class="box-typical-body">
-					<div class="table-responsive">
-						<table class="table gridBorderless">						
-							<tr>
-								<td>
-									<fieldset class="form-group">
-											<label class="form-label semibold" for="exampleInput">Start Amount</label>
-											<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
-									</fieldset>
-								</td>
-								<td>
-									<fieldset class="form-group">
-											<label class="form-label semibold" for="exampleInput">Start Time</label>
-											<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
-									</fieldset>	
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<fieldset class="form-group">
-										<label class="form-label semibold" for="exampleInput">End Amount</label>
-										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
-									</fieldset>
-								</td>
-								<td>
-									<fieldset class="form-group">
-										<label class="form-label semibold" for="exampleInput">End Time</label>
-										<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
-									</fieldset>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div><!--.row-->
-		</section>
-	</div>
 </script>
 
 <!-- ********************************************
@@ -2036,12 +2092,13 @@
 	});
 
 	/************************************************
-	*  User MVVM   								*
+	*  Staff MVVM   								*
 	************************************************/
-	app.users = kendo.observable({
+	app.staff = kendo.observable({
 		dataSource 			: dataStore(apiUrl + "employees"),
 		companyUserDS 		: dataStore(apiUrl + "company_users"),		
 		roleList 			: app.source.roleList,
+		statusList 			: app.source.statusList,
 		obj 				: [],
 		pageLoad        	: function(){},
 		signUp          	: function(){
@@ -2124,10 +2181,19 @@
 		},
 		setObj 				: function(){
 			this.set("obj", {
-				role_id		: 4,
-				username 	: "",
-				email		: "",
-				password 	: ""
+				role_id			: 4,
+				username 		: "",
+				email			: "",
+				password 		: "",
+
+				user_id 		: 0,
+				number 			: "",
+				name 			: "",
+				type 			: "user",
+				gender 			: "M",
+				phone 			: "",
+				date_registered : new Date(),
+				status 			: 1
 			});
 		},
 		validating 			: function(){
@@ -2196,16 +2262,16 @@
 				user_id 		: id,
 				number 			: obj.number,
 				name 			: obj.name,
-				type 			: "user",
-				gender 			: "M",
+				type 			: obj.type,
+				gender 			: obj.gender,
 				phone 			: obj.phone,
-				date_registered : new Date(),
-				status 			: 1
+				date_registered : obj.date_registered,
+				status 			: obj.status
 			});
 			this.dataSource.sync();
 		}
 	});
-	app.userList = kendo.observable({
+	app.staffList = kendo.observable({
 		dataSource 			: dataStore(apiUrl + "employees"),
 		roleList 			: app.source.roleList,
 		obj 				: [],
@@ -3095,7 +3161,7 @@
 	});
 
 	app.settings = kendo.observable({
-
+		pageLoad : function(){}
 	});
 
 	app.company_profile = kendo.observable({
@@ -3454,9 +3520,9 @@
 		index       : new kendo.Layout("#index", {model: app.index}),
 		menu        : new kendo.Layout('#menu-tmpl'),       
 
-		//Users
-		users       : new kendo.Layout("#users", {model: app.users}),
-		userList      : new kendo.Layout("#userList", {model: app.userList}),
+		//Staff
+		staff       : new kendo.Layout("#staff", {model: app.staff}),
+		staffList      : new kendo.Layout("#staffList", {model: app.staffList}),
 
 		//Sales
 		sales: new kendo.Layout("#sales", {model: app.sales}),
@@ -3514,25 +3580,25 @@
 	/************************************************
 	*  User Router   								*
 	************************************************/
-	app.router.route("/users", function(){                 
-		app.view.layout.showIn("#content", app.view.users);
+	app.router.route("/staff", function(){                 
+		app.view.layout.showIn("#content", app.view.staff);
 		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
 
-		var vm = app.users;
-		if(app.pageLoaded["users"]==undefined){
-			app.pageLoaded["users"] = true;                
+		var vm = app.staff;
+		if(app.pageLoaded["staff"]==undefined){
+			app.pageLoaded["staff"] = true;                
 			vm.setObj();
 		}
 
 		vm.pageLoad();        
 	});
-	app.router.route("/user_list", function(){                 
-		app.view.layout.showIn("#content", app.view.userList);
+	app.router.route("/staff_list", function(){                 
+		app.view.layout.showIn("#content", app.view.staffList);
 		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
 
-		var vm = app.userList;
-		if(app.pageLoaded["user_list"]==undefined){
-			app.pageLoaded["user_list"] = true;
+		var vm = app.staffList;
+		if(app.pageLoaded["staff_list"]==undefined){
+			app.pageLoaded["staff_list"] = true;
 		}
 
 		vm.pageLoad();        

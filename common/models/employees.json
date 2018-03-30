@@ -49,7 +49,7 @@
     "transactions": {
       "type": "hasMany",
       "model": "transactions",
-      "foreignKey": "contact_id"
+      "foreignKey": "employee_id"
     }
   },
   "acls": [
