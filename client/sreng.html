@@ -1693,33 +1693,7 @@
 			<header class="box-typical-header">
 				<div class="tbl-row">
 					<div class="tbl-cell tbl-cell-title">
-						<input data-role="dropdownlist"        
-								data-value-primitive="true"
-								data-text-field="text"
-								data-value-field="value"
-								data-bind="value: sorter,
-										source: sortList,
-										events: { change: sorterChanges }" />
-
-						<input data-role="datepicker"
-								class="sdate"
-								data-format="dd-MM-yyyy"
-								data-bind="value: sdate"
-								placeholder="ចាប៉ពី ..." >
-
-						<input data-role="datepicker"
-								class="edate"
-								data-format="dd-MM-yyyy"
-								data-bind="value: edate"
-								placeholder="ដល់ ..." >
-
-						<span class="typeahead-query">
-							<input id="typeahead-search-country-v1" class="form-control" name="q" type="search" data-bind="value: txtSearch" autocomplete="off">
-						</span>
-
-						<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
-							<i class="fa fa-search"></i>
-						</button>
+						<h3>របាយការណ៍លក់អំពីបុគ្គលិក </h3>
 					</div>
 					<div class="tbl-cell tbl-cell-action-bordered">
 						<a href="#/sales">
@@ -1736,6 +1710,52 @@
 				</div>
 			</header>
 			<div class="box-typical-body">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<table class="table gridBorderless">
+							<tr>
+								<td>
+									<input data-role="dropdownlist"        
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: sorter,
+													source: sortList,
+													events: { change: sorterChanges }" />
+								</td>
+								<td>
+									<input data-role="datepicker"
+											class="sdate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: sdate"
+											placeholder="ចាប៉ពី ..." >
+			
+									<input data-role="datepicker"
+											class="edate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: edate"
+											placeholder="ដល់ ..." >
+								</td>
+								<td>
+									<input data-role="dropdownlist"
+									data-auto-bind="false"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: employee_id,
+												source: employeeDS"
+									data-option-label="--- បុគ្គលិក ---"
+									style="width: 110%;"/>
+								</td>
+								<td>	
+									<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							<tr>
+						</table>
+					</div>
+				</div>
 				<div class="table-responsive">
 					<div data-role="grid"
 						data-column-menu="true"
@@ -1752,12 +1772,7 @@
 							{ field: 'number', title: 'លេខកូដ' },
 							{ field: 'type', title: 'ប្រភេទ' },
 							{ field: 'amount', title: 'ទឹកប្រាក់', template: '#=currencyFormat(amount)#' },
-							{ field: 'employee_id', title: 'បុគ្គលិក' },
-							{ 
-								field: 'transaction_status', 
-								title: 'ស្ថានភាព',
-								template:kendo.template($('#transactionList-status-template').html()) 
-							}
+							{ field: 'employees.name', title: 'បុគ្គលិក' },
 						]"
 						data-auto-bind="false"
 						data-bind="source: dataSource"></div>
@@ -3666,6 +3681,7 @@
 
 	app.sale_by_employee = kendo.observable({
 		dataSource      		: dataStore(apiUrl + "transactions"),
+		employeeDS      		: dataStore(apiUrl + "employees"),
 		sortList				: app.source.sortList,
 		sorter 					: "today",
 		sdate 					: "",
@@ -3713,6 +3729,11 @@
 				where = {},
 				start = this.get("sdate"),
         		end = this.get("edate");
+				employee_id = this.get("employee_id");
+
+			if(employee_id){
+            	where.employee_id = employee_id;
+            }
 
         	//Dates
         	if(start && end){
