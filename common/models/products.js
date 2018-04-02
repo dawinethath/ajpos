@@ -1,5 +1,6 @@
 'use strict';
 var loopback = require('loopback');
+var noImage = "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg";
 
 module.exports = function(Products) {
     Products.beforeRemote('**', function(ctx, user, next) {
@@ -38,5 +39,19 @@ module.exports = function(Products) {
 				}
 			});
         });
-    });
+	});
+	
+	Products.afterRemote('**', function (ctx, user, next) {
+		if(ctx.result) {
+			if(Array.isArray(ctx.result)) {
+				ctx.result.forEach(function (result) {
+					if(result.image_url=="" || result.image_url==null){
+						result.image_url = noImage;
+					}
+				});
+			}
+		}
+	  
+		next();
+	});
 };

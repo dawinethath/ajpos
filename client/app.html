@@ -1363,6 +1363,57 @@
 		<span class="glyphicon glyphicon-asterisk"></span>
 	</button>
 </script>
+<script id="userNewPassword" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>ផ្ដូរលេខសំងាត់ថ្មី</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" data-bind="click: save">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<div class="page-center">
+						<div class="page-center-in">
+							<div class="container-fluid">
+								<form class="sign-box reset-password-box">
+									<!--<div class="sign-avatar">
+										<img src="img/avatar-sign.png" alt="">
+									</div>-->
+									<header class="sign-title">Old Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="Old Password"/>
+									</div>
+									<header class="sign-title">New Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="New Password"/>
+									</div>
+									<header class="sign-title">Confirm New Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="Confirm New Password"/>
+									</div>
+									<button type="submit" class="btn btn-rounded btn-block">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div><!--.page-center-->
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
 
 <!-- SALE SESSION -->
 <script id="sale_sessions" type="text/x-kendo-template">
@@ -2364,6 +2415,183 @@
 		},
 		closeResetPassword	: function(){
 			this.set("resetPasswordVisible", false);
+		}
+	});
+	app.userNewPassword = kendo.observable({
+		dataSource 			: dataStore(apiUrl + "employees"),
+		companyUserDS 		: dataStore(apiUrl + "company_users"),		
+		roleList 			: app.source.roleList,
+		statusList 			: app.source.statusList,
+		obj 				: [],
+		pageLoad        	: function(){},
+		signUp          	: function(){
+			//Register
+			$.ajax({
+				url: apiUrl + "Users",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"username": this.get("username"),
+					"email": this.get("email"),
+					"password": this.get("password")
+				}
+			}).done(function( result ) {
+				console.log(result);
+			});
+		},
+		getLogin       		: function(){
+			var self = this;
+
+			$.ajax({
+				url: apiUrl + "Users/login",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"username": this.get("username"),
+					"password": this.get("password")
+				}
+			}).done(function( result ) {
+				if (result) {
+					self.set("access_token", result.data.id);
+					app.userData = result.data;
+					localforage.setItem('user', result.data);
+				}
+			});
+		},
+		getLogout       	: function(){
+			var url = apiUrl + "Users/logout?access_token=" + app.userData.id;
+			
+			$.ajax({
+				url: url,
+				type: "POST",
+				dataType: "json"
+			}).done(function( result ) {
+				console.log(result);
+
+				localforage.removeItem('user').then(function() {
+					// Run this code once the key has been removed.
+					console.log('Key is cleared!');
+				}).catch(function(err) {
+					// This code runs if there were any errors
+					console.log(err);
+				});
+				window.location.replace(baseUrl + "/login.html");
+			});
+		},
+		getUser         	: function(){
+			var url = apiUrl + "Users" + this.get("user_id") + "?access_token=" + this.get("access_token");
+
+			$.ajax({
+				url: url,
+				type: "GET",
+				dataType: "json"
+			}).done(function( result ) {
+				if (result) {
+					console.log(result.data);
+				}
+			});
+		},
+		deleteAccessToken 	: function(){
+			var url = apiUrl + "Users" + this.get("user_id") + "?access_token=" + this.get("access_token");
+
+			$.ajax({
+				url: url,
+				type: "DELETE",
+				dataType: "json"
+			}).done(function( result ) {
+				console.log(result);
+			});
+		},
+		setObj 				: function(){
+			this.set("obj", {
+				role_id			: 4,
+				username 		: "",
+				email			: "",
+				password 		: "",
+
+				user_id 		: 0,
+				number 			: "",
+				name 			: "",
+				type 			: "user",
+				gender 			: "M",
+				phone 			: "",
+				date_registered : new Date(),
+				status 			: 1
+			});
+		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj");
+
+			if(obj.email=="" || obj.username=="" || obj.password==""){
+				result = false;
+				app.source.dangerAlert("ត្រូវការ Email, Username, Password");
+			}
+
+			return result;
+		},
+		save 				: function(){
+			var self = this, 
+				obj = this.get("obj");
+			if(this.validating()){	
+				//Register
+				$.ajax({
+					url: apiUrl + "Users",
+					type: "POST",
+					dataType: "json",
+					data: {
+						"username": obj.username,
+						"email": obj.email,
+						"password": obj.password
+					}
+				}).done(function( result ) {
+					if(result){
+						self.addCompanyUser(result.data.id);
+						self.assignRole(result.data.id);
+						self.addEmployee(result.data.id);
+					}				
+				}).fail(function(err) {
+					app.source.dangerAlert("Status Code: " + err.responseJSON.error.statusCode + "<br>" + "Message: " + err.responseJSON.error.message);
+				});
+			}
+		},
+		addCompanyUser 		: function(id){
+			this.companyUserDS.add({
+				company_id 	: app.companyData.id,
+				user_id 	: id
+			});
+			this.companyUserDS.sync();
+		},
+		assignRole 			: function(id){
+			var self = this, 
+				obj = this.get("obj");
+
+			$.ajax({
+				url: apiUrl + "company_users/assign_role?access_token=" + app.userData.id,
+				type: "POST",
+				dataType: "json",
+				data: {
+					"userId": id,
+					"roleId": obj.role_id
+				}
+			}).done(function( result ) {
+				self.setObj();
+				app.source.successAlert();
+			});
+		},
+		addEmployee 		: function(id){
+			var obj = this.get("obj");
+
+			this.dataSource.add({
+				user_id 		: id,
+				number 			: obj.number,
+				name 			: obj.name,
+				type 			: obj.type,
+				gender 			: obj.gender,
+				phone 			: obj.phone,
+				date_registered : obj.date_registered,
+				status 			: obj.status
+			});
+			this.dataSource.sync();
 		}
 	});
 
@@ -3521,8 +3749,9 @@
 		menu        : new kendo.Layout('#menu-tmpl'),       
 
 		//Staff
-		staff       : new kendo.Layout("#staff", {model: app.staff}),
-		staffList      : new kendo.Layout("#staffList", {model: app.staffList}),
+		staff       		: new kendo.Layout("#staff", {model: app.staff}),
+		staffList      		: new kendo.Layout("#staffList", {model: app.staffList}),
+		userNewPassword     : new kendo.Layout("#userNewPassword", {model: app.userNewPassword}),
 
 		//Sales
 		sales: new kendo.Layout("#sales", {model: app.sales}),
@@ -3578,7 +3807,7 @@
 	});
 	
 	/************************************************
-	*  User Router   								*
+	*  Staff Router   								*
 	************************************************/
 	app.router.route("/staff", function(){                 
 		app.view.layout.showIn("#content", app.view.staff);
@@ -3599,6 +3828,17 @@
 		var vm = app.staffList;
 		if(app.pageLoaded["staff_list"]==undefined){
 			app.pageLoaded["staff_list"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+	app.router.route("/user_new_password", function(){                 
+		app.view.layout.showIn("#content", app.view.userNewPassword);
+
+		var vm = app.userNewPassword;
+		if(app.pageLoaded["staff"]==undefined){
+			app.pageLoaded["staff"] = true;                
+			vm.setObj();
 		}
 
 		vm.pageLoad();        
