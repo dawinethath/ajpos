@@ -50,6 +50,11 @@
       "type": "hasMany",
       "model": "transactions",
       "foreignKey": "employee_id"
+    },
+    "sale-sessions": {
+      "type": "hasMany",
+      "model": "transactions",
+      "foreignKey": "employee_id"
     }
   },
   "acls": [

@@ -94,7 +94,7 @@
 								<img src="assets/img/avatar-2-64.png" alt="">
 							</button>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-								<a class="dropdown-item" href="#/users"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+								<a class="dropdown-item" href="#/staff"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
 								<a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 								<a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
 								<div class="dropdown-divider"></div>
@@ -129,6 +129,12 @@
 	                <i class="font-icon font-icon-home"></i>
 	                <span class="lbl">ពត៌មាន</span>
 	            </a>
+			</li>
+			<li class="purple">
+	            <a href="#/sale_sessions">
+	                <i class="font-icon font-icon-notebook"></i>
+	                <span class="lbl">វេនលក់</span>
+	            </a>
 	        </li>
 	        <li class="blue-darker">
 	            <a href="#/sales">
@@ -149,17 +155,11 @@
 	            </a>
 	        </li>
 	        <li class="green">
-	            <a href="#">
+	            <a href="#/report">
 	                <i class="font-icon font-icon-chart"></i>
 	                <span class="lbl">របាយការណ៍</span>
 	            </a>
 			</li>
-			<li class="magenta">
-	            <a href="#/user_list">
-	                <i class="font-icon font-icon-user"></i>
-	                <span class="lbl">អ្នកប្រើប្រាស់</span>
-	            </a>
-	        </li>
 	        <li class="coral">
 	            <a href="#/settings">
 	                <i class="font-icon font-icon-cogwheel"></i>
@@ -290,187 +290,8 @@
 		</div>
 	</div><!--.container-fluid-->
 </script>
-<script type="text/x-kendo-template" id="users">
-	<div class="container-fluid">
-		<section class="box-typical">
-			<header class="box-typical-header">
-				<div class="tbl-row">
-					<div class="tbl-cell tbl-cell-title">
-						<h3>អ្នកប្រើប្រាស់</h3>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" data-bind="click: save">
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</button>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</div>
-				</div>
-			</header>
-			<div class="box-typical-body">
-				<div class="box-typical">
-					<br>
-					<div class="row-fluid" align="center">
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputRole" style="text-align: left;">តួនាទី</label>
-								<input id="exampleInputRole"
-									data-role="dropdownlist"
-									data-value-primitive="true"
-									data-text-field="text"
-									data-value-field="value"
-									data-bind="value: obj.role_id,
-												source: roleList"
-									style="width: 100%;" />
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputEmail1" style="text-align: left;">អុីម៉ែល</label>
-								<input type="email" class="form-control" id="exampleInputEmail1" data-bind="value: obj.email" placeholder="Enter email">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់</label>
-								<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.username" placeholder="Username">
-							</fieldset>
-						</div>
-						<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label" for="exampleInputPassword1" style="text-align: left;">លេខសំងាត់</label>
-								<input type="text" class="form-control" id="exampleInputPassword1" data-bind="value: obj.password" placeholder="Password">
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</div><!--.row-->
-		</section>
-	</div><!--.container-fluid-->
-</script>
-<script type="text/x-kendo-template" id="userList">
-	<div class="container-fluid">
-		<section class="box-typical">
-			<header class="box-typical-header">
-				<div class="tbl-row">
-					<div class="tbl-cell tbl-cell-title">
-						<h3>តារាងអ្នកប្រើប្រាស់</h3>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<a href="#/users">
-							<button type="button" class="action-btn">
-								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							</button>
-						</a>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</div>
-				</div>
-			</header>
-			<div class="box-typical-body">
-				<div class="box-typical">
-					<div class="table-responsive">
-						<div data-role="grid"
-							data-column-menu="true"
-							data-reorderable="true"
-							data-scrollable="true"
-							data-resizable="true"
-							data-pageable="true"
-							data-no-records="true"
-							data-messages="{
-								noRecords: 'ពុំមានទិន្នន័យ'
-							}"
-							data-columns="[
-								{ field: 'User.username', title: 'ឈ្មោះ' },
-								{ field: 'User.email', title: 'អុីមែល' },
-								{ field: 'status', title: 'ស្ថានភាព' },
-								{
-									title: '',
-									template:kendo.template($('#userList-actions-tmpl').html())
-								}
-							]"
-							data-auto-bind="false"
-							data-bind="source: dataSource"></div>
-					</div>
 
-					<div data-role="window"
-							data-title="ផ្ដូរតួនាទីថ្មី"
-							data-width="350"
-							data-height="131"
-							data-iframe="true"
-							data-modal="true"
-							data-visible="false"
-							data-position="{top:'40%',left:'35%'}"
-							data-actions="{}"
-							data-resizable="false"
-							data-bind="visible: windowVisible"
-							style="text-align:center;">
-
-						<fieldset class="form-group">
-							<input id="exampleInputRole"
-								data-role="dropdownlist"
-								data-value-primitive="true"
-								data-text-field="text"
-								data-value-field="value"
-								data-bind="value: obj.role_id,
-											source: roleList"
-								data-option-label="---សូមជ្រើសរើស---"
-								style="width: 100%;" />
-						</fieldset>
-
-						<div class="form-group">
-							<button type="button" class="btn btn-inline btn-primary" data-bind="click: save">កត់ត្រា</button>
-							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeWindow">បោះបង់</button>
-						</div>
-
-					</div>
-
-					<div data-role="window"
-							data-title="ប្ដូរលេខសំងាត់ថ្មី"
-							data-width="350"
-							data-height="131"
-							data-iframe="true"
-							data-modal="true"
-							data-visible="false"
-							data-position="{top:'40%',left:'35%'}"
-							data-actions="{}"
-							data-resizable="false"
-							data-bind="visible: resetPasswordVisible"
-							style="text-align:center;">
-
-						<fieldset class="form-group">
-							<input type="text" class="form-control" 
-								data-bind="value: obj.newPassword"
-								placeholder="លេខសំងាត់ថ្មី..."
-								style="width: 100%;" />
-						</fieldset>
-
-						<div class="form-group">
-							<button type="button" class="btn btn-inline btn-primary" data-bind="click: savePassword">កត់ត្រា</button>
-							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeResetPassword">បោះបង់</button>
-						</div>
-
-					</div>
-				</div>
-			</div><!--.row-->
-		</section>
-	</div><!--.container-fluid-->
-</script>
-<script id="userList-actions-tmpl" type="text/x-kendo-tmpl">	
-	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: edit">
-		<span class="glyphicon glyphicon-pencil"></span>
-	</button>
-	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: reset">
-		<span class="glyphicon glyphicon-asterisk"></span>
-	</button>
-</script>
-
+<!-- SALE -->
 <script id="sales" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<div class="row">
@@ -592,7 +413,8 @@
 </script>
 <script id="sales-category-template" type="text/x-kendo-tmpl">
 	<div class="product" data-bind="click: showProduct">
-		<img src="http://demos.telerik.com/kendo-ui/content/web/Employees/#:id#.jpg" alt="#:name# image" />
+		<!-- <img src="http://demos.telerik.com/kendo-ui/content/web/Employees/#:id#.jpg" alt="#:name# image" /> -->
+		<img src="#:image_url#" alt="#:name# image" />
 		<h3>#:name#</h3>
 	</div>
 </script>
@@ -603,7 +425,6 @@
 		<h3>#:name# <br><br> #=currencyFormat(price)#</h3>
 	</div>
 </script>
-
 <script id="checkout" type="text/x-kendo-template">
 	<div id="example">
 		<div class="container-fluid">
@@ -612,7 +433,7 @@
 
 					<!-- Receipt Detail -->
 					<div class="table-responsive">
-						<div data-role="grid"
+						<div id="grid" data-role="grid"
 							data-column-menu="true"
 							data-reorderable="true"
 							data-scrollable="true"
@@ -687,13 +508,12 @@
 									width:'100px'
 								},
 								{
-									field: 'tax',
+									field: 'taxes',
 									title: 'ពន្ធអាករ',
 									hidden: true,
-									format: '{0:p}',
-									editor: numberTextboxEditor,
-									attributes: { style: 'text-align: right;' }, 
-									width:'100px'
+									editor: taxEditor, 
+									template: '#=taxes?taxes.name:app.emptyString#', 
+									width: '100px'
 								}
 							]"
 							data-auto-bind="false"
@@ -868,6 +688,7 @@
 	</div>
 </script>
 
+<!-- TRANSACTION -->
 <script id="transactionList" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
@@ -964,6 +785,7 @@
 	</div>
 </script>
 
+<!-- INVOICING -->
 <script id="invoicePos" type="text/x-kendo-template">
 
 	<div class="form-group no-print">
@@ -1009,8 +831,19 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="2"></td>
-							<td>សរុប</td>
+							<td colspan="3" align="right">សរុបរង:</td>
+							<td align="right">
+								<span data-format="c" data-bind="text: obj.sub_total"></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="right">ពន្ធអាករ:</td>
+							<td align="right">
+								<span data-format="c" data-bind="text: obj.tax"></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="right">សរុប:</td>
 							<td align="right">
 								<span data-format="c" data-bind="text: obj.amount"></span>
 							</td>
@@ -1039,6 +872,7 @@
 	</tr>
 </script>
 
+<!-- PRODUCT -->
 <script id="productList" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
@@ -1248,13 +1082,417 @@
 	</div><!--.container-fluid-->
 </script>
 
+<!-- SETTING -->
 <script id="settings" type="text/x-kendo-template">
+	<div class="row">
+			<div class="col-md-6">
+				<div class="dd" id="nestable7">
+					<ol class="dd-list">
+						<li class="dd-item dd3-item" data-id="13">
+							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+								<a href="#/company_profile">
+									<h5 type="text" class="" style="">ពត៌មានក្រុមហ៊ុន</h5>
+								</a>
+							</div>
+						</li>
+						<li class="dd-item dd3-item" data-id="14">
+							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+								<a href="#/staff_list">
+									<h5 type="text" class="" style="">គ្រប់គ្រងបុគ្គលិក</h5>
+								</a>
+							</div>
+						</li>
+						<li class="dd-item dd3-item" data-id="14">
+							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+									<h5 type="text" class="" style="">ការកំណត់</h5>
+							</div>
+							<ol class="dd-list">
+								<li class="dd-item dd3-item" data-id="16">
+									<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+										<a href="#/category">
+											<h5 type="text" class="" style="">ប្រភេទ</h5>
+										</a>
+									</div>
+								</li>
+								<li class="dd-item dd3-item" data-id="17">
+									<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+										<a href="#/unit_of_measurements">
+											<h5 type="text" class="" style="">ខ្នាត</h5>
+										</a>
+									</div>
+								</li>
+							</ol>
+						</li>
+						<li class="dd-item dd3-item" data-id="14">
+							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+								<a href="#/taxes">
+									<h5 type="text" class="" style="">ពន្ធ</h5>
+								</a>
+							</div>
+						</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+</script>
+
+<!-- STAFF -->
+<script id="staff" type="text/x-kendo-template">
 	<div class="container-fluid">
 		<section class="box-typical">
 			<header class="box-typical-header">
 				<div class="tbl-row">
 					<div class="tbl-cell tbl-cell-title">
-						<h3>ការកំណត់</h3>
+						<h3>បុគ្គលិក</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" data-bind="click: save">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<br>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row-fluid">
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputRole" style="text-align: left;">តួនាទី</label>
+										<input id="exampleInputRole"
+											data-role="dropdownlist"
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: obj.role_id,
+														source: roleList"
+											style="width: 100%;" />
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputEmail1" style="text-align: left;">អុីម៉ែល</label>
+										<input type="email" class="form-control" id="exampleInputEmail1" data-bind="value: obj.email" placeholder="Enter email">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ឈ្មោះអ្នកប្រាស់ជាអក្សរឡាតាំង</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.username" placeholder="Username">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInputPassword1" style="text-align: left;">លេខសំងាត់</label>
+										<input type="text" class="form-control" id="exampleInputPassword1" data-bind="value: obj.password" placeholder="Password">
+									</fieldset>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="row-fluid">
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">នាម និង គោត្តនាម</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.name" placeholder="Name">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">លេខទូរស័ព្ទ</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.phone" placeholder="Phone">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ថ្ងៃចូលបំរើការងារ</label>
+										<input id="txnDate" name="txnDate"
+												class="form-control"
+												data-role="datepicker"
+												data-bind="value: obj.date_registered" 
+												required data-required-msg="required"
+												placeholder="Register date"
+												style="width: 100%;" />
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset class="form-group">
+										<label class="form-label" for="exampleInput" style="text-align: left;">ស្ថានភាព</label>
+										<input class="form-control"
+											data-role="dropdownlist"
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: obj.status,
+														source: statusList"
+											style="width: 100%;" />
+									</fieldset>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+<script id="staffList" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>គ្រប់គ្រងបុគ្គលិក</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<a href="#/staff">
+							<button type="button" class="action-btn">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+						</a>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<div class="table-responsive">
+						<div data-role="grid"
+							data-column-menu="true"
+							data-reorderable="true"
+							data-scrollable="true"
+							data-resizable="true"
+							data-pageable="true"
+							data-no-records="true"
+							data-messages="{
+								noRecords: 'ពុំមានទិន្នន័យ'
+							}"
+							data-columns="[
+								{ field: 'name', title: 'ឈ្មោះ' },
+								{ field: 'gender', title: 'ភេទ' },
+								{ field: 'phone', title: 'លេខទូរស័ព្ទ' },
+								{ field: 'date_registered', title: 'ថ្ងៃចូលបំរើការងារ', template:'#=dateFormat(date_registered)#' },
+								{ 
+									field: 'status', 
+									title: 'ស្ថានភាព',
+									template:kendo.template($('#staffList-status-tmpl').html()) 
+								},
+								{
+									title: '',
+									template:kendo.template($('#staffList-actions-tmpl').html())
+								}
+							]"
+							data-bind="source: dataSource"></div>
+					</div>
+
+					<div data-role="window"
+							data-title="ផ្ដូរតួនាទីថ្មី"
+							data-width="350"
+							data-height="131"
+							data-iframe="true"
+							data-modal="true"
+							data-visible="false"
+							data-position="{top:'40%',left:'35%'}"
+							data-actions="{}"
+							data-resizable="false"
+							data-bind="visible: windowVisible"
+							style="text-align:center;">
+
+						<fieldset class="form-group">
+							<input id="exampleInputRole"
+								data-role="dropdownlist"
+								data-value-primitive="true"
+								data-text-field="text"
+								data-value-field="value"
+								data-bind="value: obj.role_id,
+											source: roleList"
+								data-option-label="---សូមជ្រើសរើស---"
+								style="width: 100%;" />
+						</fieldset>
+
+						<div class="form-group">
+							<button type="button" class="btn btn-inline btn-primary" data-bind="click: save">កត់ត្រា</button>
+							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeWindow">បោះបង់</button>
+						</div>
+
+					</div>
+
+					<div data-role="window"
+							data-title="ប្ដូរលេខសំងាត់ថ្មី"
+							data-width="350"
+							data-height="131"
+							data-iframe="true"
+							data-modal="true"
+							data-visible="false"
+							data-position="{top:'40%',left:'35%'}"
+							data-actions="{}"
+							data-resizable="false"
+							data-bind="visible: resetPasswordVisible"
+							style="text-align:center;">
+
+						<fieldset class="form-group">
+							<input type="text" class="form-control" 
+								data-bind="value: obj.newPassword"
+								placeholder="លេខសំងាត់ថ្មី..."
+								style="width: 100%;" />
+						</fieldset>
+
+						<div class="form-group">
+							<button type="button" class="btn btn-inline btn-primary" data-bind="click: savePassword">កត់ត្រា</button>
+							<button type="button" class="btn btn-inline btn-secondary" data-bind="click: closeResetPassword">បោះបង់</button>
+						</div>
+
+					</div>
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+<script id="staffList-status-tmpl" type="text/x-kendo-tmpl">	
+	#if(status==1){#
+		កំពុងបំរើការងារ
+	#}else{#
+		ឈប់ពីការងារ
+	#}#
+</script>
+<script id="staffList-actions-tmpl" type="text/x-kendo-tmpl">	
+	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: edit">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</button>
+	<button type="button" class="tabledit-edit-button btn btn-sm btn-default" data-bind="click: reset">
+		<span class="glyphicon glyphicon-asterisk"></span>
+	</button>
+</script>
+<script id="userNewPassword" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>ផ្ដូរលេខសំងាត់ថ្មី</h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" data-bind="click: save">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="box-typical">
+					<div class="page-center">
+						<div class="page-center-in">
+							<div class="container-fluid">
+								<form class="sign-box reset-password-box">
+									<!--<div class="sign-avatar">
+										<img src="img/avatar-sign.png" alt="">
+									</div>-->
+									<header class="sign-title">Old Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="Old Password"/>
+									</div>
+									<header class="sign-title">New Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="New Password"/>
+									</div>
+									<header class="sign-title">Confirm New Password</header>
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="Confirm New Password"/>
+									</div>
+									<button type="submit" class="btn btn-rounded btn-block">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div><!--.page-center-->
+				</div>
+			</div><!--.row-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+
+<!-- SALE SESSION -->
+<script id="sale_sessions" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+							<h2 data-bind="text: title"></h2>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+							<button type="button" class="action-btn" data-bind="click: save">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							</button>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+					<div class="table-responsive">
+						<table class="table gridBorderless">						
+							<tr>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Amount</label>
+											<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+											<label class="form-label semibold" for="exampleInput">Start Time</label>
+											<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
+									</fieldset>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Amount</label>
+										<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
+									</fieldset>
+								</td>
+								<td>
+									<fieldset class="form-group">
+										<label class="form-label semibold" for="exampleInput">End Time</label>
+										<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
+									</fieldset>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div><!--.row-->
+		</section>
+	</div>
+</script>
+
+<!-- COMPANY -->
+<script id="company_profile" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>Company Profile</h3>
 					</div>
 					<div class="tbl-cell tbl-cell-action-bordered">
 						<button type="button" class="action-btn" data-bind="click: save">
@@ -1349,6 +1587,7 @@
 	</div><!--.container-fluid-->
 </script>
 
+<!-- CATEGORY -->
 <script id="category" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1365,11 +1604,23 @@
 				<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.description" placeholder="Description...">
 			</fieldset>
 		</div>
+		<div class="col-lg-4">
+			<fieldset class="form-group">
+				<img width="120px" data-bind="attr: { src: obj.image_url }" style="margin-bottom: 15px; border: 1px solid #ddd;">
+													
+				<input id="files" name="files"
+						type="file"
+						data-role="upload"
+						data-multiple="false"
+						data-show-file-list="false"
+						data-bind="events: { 
+							select: onSelect
+						}">
+			</fieldset>
+		</div>
 	</div>
 	<button type="button" class="btn btn-inline btn-primary" data-bind="click: add">ADD</button>
-	<button data-bind="click: update" class="k-button k-primary">UPDATE</button>
-	<button data-bind="click: read" class="k-button k-primary">READ</button>
-	<button data-bind="click: setObj" class="k-button k-primary">NEW OBJ</button>
+	<button type="button" class="btn btn-inline btn-primary" data-bind="click: update">UPDATE</button>
 
 	<br>
 	<br>
@@ -1388,6 +1639,7 @@
 
 </script>
 
+<!-- UOM -->
 <script id="unit_of_measurements" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1427,6 +1679,7 @@
 
 </script>
 
+<!-- TAX -->
 <script id="taxes" type="text/x-kendo-template">
 	<h2 data-bind="text: title"></h2>
 
@@ -1464,43 +1717,6 @@
 		style="height: 200px">
 	</div>
 				 
-
-</script>
-
-<script id="sale_sessions" type="text/x-kendo-template">
-	<h2 data-bind="text: title"></h2>
-
-	<div class="row">
-		<div class="col-lg-4">
-			<div>
-				<fieldset class="form-group">
-					<label class="form-label semibold" for="exampleInput">Start Amount</label>
-					<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.start_amount, disabled: editMode" placeholder="Start Amount...">
-				</fieldset>
-			</div>
-			<div>
-					<fieldset class="form-group">
-						<label class="form-label semibold" for="exampleInput">Start Time</label>
-						<input data-role="datetimepicker" data-bind=" value: obj.start_at, disabled: editMode" style="width: 100%;">
-					</fieldset>
-			</div>
-		</div>
-		<div class="col-lg-4">
-			<div>
-				<fieldset class="form-group">
-					<label class="form-label semibold" for="exampleInput">End Amount</label>
-					<input type="text" class="form-control" id="exampleInput" data-bind="value: obj.end_amount, enabled: editMode" placeholder="End Amount...">
-				</fieldset>
-			</div>
-			<div>
-				<fieldset class="form-group">
-					<label class="form-label semibold" for="exampleInput">End Time</label>
-					<input data-role="datetimepicker" data-bind=" value: obj.end_at, enabled: editMode" style="width: 100%;">
-				</fieldset>
-			</div>
-		</div>
-	</div>
-	<button type="button" class="btn btn-inline btn-primary" data-bind="click: save">Save</button>
 
 </script>
 
@@ -1692,14 +1908,7 @@
 			<header class="box-typical-header">
 				<div class="tbl-row">
 					<div class="tbl-cell tbl-cell-title">
-						<h3>របាយការណ៍លក់អំពីបុគ្គលិក </h3>
-					</div>
-					<div class="tbl-cell tbl-cell-action-bordered">
-						<a href="#/sales">
-						<button type="button" class="action-btn">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-						</button>
-						</a>
+						<h3>របាយការណ៍លក់តាមបុគ្គលិក </h3>
 					</div>
 					<div class="tbl-cell tbl-cell-action-bordered">
 						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
@@ -1781,6 +1990,214 @@
 	</div><!--.container-fluid-->
 </script>
 
+<script id="report" type="text/x-kendo-template">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="dd" id="nestable7">
+				<ol class="dd-list">
+					<li class="dd-item dd3-item" data-id="13">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/sale_by_employee">
+								<h5 type="text" class="" style="">របាយការណ៍លក់តាមបុគ្គលិក</h5>
+							</a>
+						</div>
+					</li>
+					<li class="dd-item dd3-item" data-id="13">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/sale_by_customer">
+								<h5 type="text" class="" style="">របាយការណ៍លក់តាមអតិថិជន</h5>
+							</a>
+						</div>
+					</li>
+					<li class="dd-item dd3-item" data-id="14">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/contact_list">
+								<h5 type="text" class="" style="">បញ្ជីអតិថិជន</h5>
+							</a>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="sale_by_customer" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>របាយការណ៍លក់តាមអតិថិជន </h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<table class="table gridBorderless">
+							<tr>
+								<td>
+									<input data-role="dropdownlist"        
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: sorter,
+													source: sortList,
+													events: { change: sorterChanges }" />
+								</td>
+								<td>
+									<input data-role="datepicker"
+											class="sdate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: sdate"
+											placeholder="ចាប៉ពី ..." >
+			
+									<input data-role="datepicker"
+											class="edate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: edate"
+											placeholder="ដល់ ..." >
+								</td>
+								<td>
+									<input data-role="dropdownlist"
+									data-auto-bind="false"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: contact_id,
+												source: contactsDS"
+									data-option-label="--- អតិថិជន ---"
+									style="width: 110%;"/>
+								</td>
+								<td>	
+									<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							<tr>
+						</table>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-columns="[
+							{ field: 'transaction_date',title: 'កាលបរិច្ឆេទ', template: '#=dateFormat(transaction_date)#' },
+							{ field: 'contacts.name', title: 'អតិថិជន' },
+							{ field: 'number', title: 'លេខកូដ' },
+							{ field: 'type', title: 'ប្រភេទ' },
+							{ field: 'amount', title: 'ទឹកប្រាក់', template: '#=currencyFormat(amount)#' },
+						]"
+						data-auto-bind="false"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+
+<script id="session_report_by_employee" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>របាយការណ៍លក់តាមបុគ្គលិក </h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<table class="table gridBorderless">
+							<tr>
+								<td>
+									<input data-role="dropdownlist"        
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: sorter,
+													source: sortList,
+													events: { change: sorterChanges }" />
+								</td>
+								<td>
+									<input data-role="datepicker"
+											class="sdate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: sdate"
+											placeholder="ចាប៉ពី ..." >
+			
+									<input data-role="datepicker"
+											class="edate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: edate"
+											placeholder="ដល់ ..." >
+								</td>
+								<td>
+									<input data-role="dropdownlist"
+									data-auto-bind="false"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: employee_id,
+												source: employeeDS"
+									data-option-label="--- បុគ្គលិក ---"
+									style="width: 110%;"/>
+								</td>
+								<td>	
+									<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							<tr>
+						</table>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-columns="[
+							{ field: 'start_at',title: 'ចាប់ផ្តើមនៅ', template: '#=dateFormat(start_at)#' },
+							{ field: 'end_at', title: 'បញ្ចប់នៅ', template: '#=dateFormat(end_at)#'  },
+							{ field: 'employees.name', title: 'បុគ្គលិក' },
+							{ field: 'start_amount', title: 'ចាប់ផ្តើមចំនួន', template: '#=currencyFormat(start_amount)#' },
+							{ field: 'end_amount', title: 'បញ្ចប់ចំនួន', template: '#=currencyFormat(end_amount)#' },
+						]"
+						data-auto-bind="false"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+
 <!-- ********************************************
 *   Template List Section     					*
 ********************************************* -->
@@ -1822,6 +2239,19 @@
         $('<input name="' + options.field + '" type="number" class="form-control" style="width: 95%;" min="0" max="1" />')
         .appendTo(container);
     }
+
+	function taxEditor(container, options) {
+        $('<input id="' + options.field + '" name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+			optionLabel: "--- ជ្រើសរើស ---",
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: dataStore(apiUrl + "taxes")
+        });
+    }
 </script>
 
 
@@ -1836,7 +2266,7 @@
 <!-- Others -->
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 
-<script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script>
+<!-- <script src="assets/js/lib/jquery/jquery-3.2.1.min.js"></script> -->
 <script src="assets/js/lib/popper/popper.min.js"></script>
 <script src="assets/js/lib/tether/tether.min.js"></script>
 <script src="assets/js/lib/bootstrap/bootstrap.min.js"></script>
@@ -1870,6 +2300,7 @@
 	app.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	app.companyData = JSON.parse(localStorage.getItem('userData/company')) ? JSON.parse(localStorage.getItem('userData/company')) : "";
 	app.emptyString = "";
+	app.noImage = "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg";
 	app.space = "sgp1.digitaloceanspaces.com";
 	kendo.culture(app.companyData.locale);
 	function currencyFormat(amount){
@@ -2201,11 +2632,13 @@
 	});
 
 	/************************************************
-	*  User MVVM   								*
+	*  Staff MVVM   								*
 	************************************************/
-	app.users = kendo.observable({
-		companyUserDS 		: dataStore(apiUrl + "company_users"),
+	app.staff = kendo.observable({
+		dataSource 			: dataStore(apiUrl + "employees"),
+		companyUserDS 		: dataStore(apiUrl + "company_users"),		
 		roleList 			: app.source.roleList,
+		statusList 			: app.source.statusList,
 		obj 				: [],
 		pageLoad        	: function(){},
 		signUp          	: function(){
@@ -2288,10 +2721,19 @@
 		},
 		setObj 				: function(){
 			this.set("obj", {
-				role_id		: 4,
-				username 	: "",
-				email		: "",
-				password 	: ""
+				role_id			: 4,
+				username 		: "",
+				email			: "",
+				password 		: "",
+
+				user_id 		: 0,
+				number 			: "",
+				name 			: "",
+				type 			: "user",
+				gender 			: "M",
+				phone 			: "",
+				date_registered : new Date(),
+				status 			: 1
 			});
 		},
 		validating 			: function(){
@@ -2322,6 +2764,7 @@
 					if(result){
 						self.addCompanyUser(result.data.id);
 						self.assignRole(result.data.id);
+						self.addEmployee(result.data.id);
 					}				
 				}).fail(function(err) {
 					app.source.dangerAlert("Status Code: " + err.responseJSON.error.statusCode + "<br>" + "Message: " + err.responseJSON.error.message);
@@ -2351,38 +2794,30 @@
 				self.setObj();
 				app.source.successAlert();
 			});
+		},
+		addEmployee 		: function(id){
+			var obj = this.get("obj");
+
+			this.dataSource.add({
+				user_id 		: id,
+				number 			: obj.number,
+				name 			: obj.name,
+				type 			: obj.type,
+				gender 			: obj.gender,
+				phone 			: obj.phone,
+				date_registered : obj.date_registered,
+				status 			: obj.status
+			});
+			this.dataSource.sync();
 		}
 	});
-	app.userList = kendo.observable({
-		dataSource 	 		: new kendo.data.DataSource({
-			transport: {
-				read:  {
-					url: apiUrl + "company_users/user_list?access_token=" + app.userData.id,
-					type: "GET",
-					dataType: "json",
-					data:  {
-						companyId : app.companyData.id
-					}
-				}
-			},
-			schema: {
-				model: { id: "id" },	  
-				data: "data",
-				total: "total"
-			},
-			page:1,
-			pageSize:100,
-			serverPaging:true,
-			serverSorting:true,
-			serverFiltering:true
-		}),
+	app.staffList = kendo.observable({
+		dataSource 			: dataStore(apiUrl + "employees"),
 		roleList 			: app.source.roleList,
 		obj 				: [],
 		windowVisible 		: false,
 		resetPasswordVisible: false,
-		pageLoad        	: function(){
-			this.dataSource.read();
-		},
+		pageLoad        	: function(){},
 		edit 				: function(e){
 			var data = e.data;
 
@@ -2471,6 +2906,183 @@
 			this.set("resetPasswordVisible", false);
 		}
 	});
+	app.userNewPassword = kendo.observable({
+		dataSource 			: dataStore(apiUrl + "employees"),
+		companyUserDS 		: dataStore(apiUrl + "company_users"),		
+		roleList 			: app.source.roleList,
+		statusList 			: app.source.statusList,
+		obj 				: [],
+		pageLoad        	: function(){},
+		signUp          	: function(){
+			//Register
+			$.ajax({
+				url: apiUrl + "Users",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"username": this.get("username"),
+					"email": this.get("email"),
+					"password": this.get("password")
+				}
+			}).done(function( result ) {
+				console.log(result);
+			});
+		},
+		getLogin       		: function(){
+			var self = this;
+
+			$.ajax({
+				url: apiUrl + "Users/login",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"username": this.get("username"),
+					"password": this.get("password")
+				}
+			}).done(function( result ) {
+				if (result) {
+					self.set("access_token", result.data.id);
+					app.userData = result.data;
+					localforage.setItem('user', result.data);
+				}
+			});
+		},
+		getLogout       	: function(){
+			var url = apiUrl + "Users/logout?access_token=" + app.userData.id;
+			
+			$.ajax({
+				url: url,
+				type: "POST",
+				dataType: "json"
+			}).done(function( result ) {
+				console.log(result);
+
+				localforage.removeItem('user').then(function() {
+					// Run this code once the key has been removed.
+					console.log('Key is cleared!');
+				}).catch(function(err) {
+					// This code runs if there were any errors
+					console.log(err);
+				});
+				window.location.replace(baseUrl + "/login.html");
+			});
+		},
+		getUser         	: function(){
+			var url = apiUrl + "Users" + this.get("user_id") + "?access_token=" + this.get("access_token");
+
+			$.ajax({
+				url: url,
+				type: "GET",
+				dataType: "json"
+			}).done(function( result ) {
+				if (result) {
+					console.log(result.data);
+				}
+			});
+		},
+		deleteAccessToken 	: function(){
+			var url = apiUrl + "Users" + this.get("user_id") + "?access_token=" + this.get("access_token");
+
+			$.ajax({
+				url: url,
+				type: "DELETE",
+				dataType: "json"
+			}).done(function( result ) {
+				console.log(result);
+			});
+		},
+		setObj 				: function(){
+			this.set("obj", {
+				role_id			: 4,
+				username 		: "",
+				email			: "",
+				password 		: "",
+
+				user_id 		: 0,
+				number 			: "",
+				name 			: "",
+				type 			: "user",
+				gender 			: "M",
+				phone 			: "",
+				date_registered : new Date(),
+				status 			: 1
+			});
+		},
+		validating 			: function(){
+			var result = true, obj = this.get("obj");
+
+			if(obj.email=="" || obj.username=="" || obj.password==""){
+				result = false;
+				app.source.dangerAlert("ត្រូវការ Email, Username, Password");
+			}
+
+			return result;
+		},
+		save 				: function(){
+			var self = this, 
+				obj = this.get("obj");
+			if(this.validating()){	
+				//Register
+				$.ajax({
+					url: apiUrl + "Users",
+					type: "POST",
+					dataType: "json",
+					data: {
+						"username": obj.username,
+						"email": obj.email,
+						"password": obj.password
+					}
+				}).done(function( result ) {
+					if(result){
+						self.addCompanyUser(result.data.id);
+						self.assignRole(result.data.id);
+						self.addEmployee(result.data.id);
+					}				
+				}).fail(function(err) {
+					app.source.dangerAlert("Status Code: " + err.responseJSON.error.statusCode + "<br>" + "Message: " + err.responseJSON.error.message);
+				});
+			}
+		},
+		addCompanyUser 		: function(id){
+			this.companyUserDS.add({
+				company_id 	: app.companyData.id,
+				user_id 	: id
+			});
+			this.companyUserDS.sync();
+		},
+		assignRole 			: function(id){
+			var self = this, 
+				obj = this.get("obj");
+
+			$.ajax({
+				url: apiUrl + "company_users/assign_role?access_token=" + app.userData.id,
+				type: "POST",
+				dataType: "json",
+				data: {
+					"userId": id,
+					"roleId": obj.role_id
+				}
+			}).done(function( result ) {
+				self.setObj();
+				app.source.successAlert();
+			});
+		},
+		addEmployee 		: function(id){
+			var obj = this.get("obj");
+
+			this.dataSource.add({
+				user_id 		: id,
+				number 			: obj.number,
+				name 			: obj.name,
+				type 			: obj.type,
+				gender 			: obj.gender,
+				phone 			: obj.phone,
+				date_registered : obj.date_registered,
+				status 			: obj.status
+			});
+			this.dataSource.sync();
+		}
+	});
 
 
 	/************************************************
@@ -2540,7 +3152,10 @@
             }
 
 			this.productDS.query({
-                filter:{ where },
+                filter:[
+					{ where },
+					{ include: "taxes" }
+				],
                 page:1,
                 pageSize:20
             });
@@ -2632,7 +3247,7 @@
 
 			this.stockDS.filter([
 				{ where: { transaction_id: id } },
-				{ include:["products"] }
+				{ include:["products","taxes"] }
 			]);
 		},
 		addObj 				: function(){
@@ -2707,7 +3322,7 @@
 			if(nonExist){
 				this.stockDS.add({
 					transaction_id 		: obj.id,
-					tax_id 				: 0,
+					tax_id 				: data.tax_id,
 					product_id 			: data.id,
 					description 		: data.description,
 					quantity 			: 1,
@@ -2716,9 +3331,10 @@
 					discount 			: 0,
 					discount_percentage	: 0,
 					amount 				: data.price,
-					tax 				: data.tax_id,
+					tax 				: 0,
 
-					products 			: data
+					products 			: data,
+					taxes 				: data.taxes
 				});
 			}
 
@@ -2732,6 +3348,14 @@
 
 			if(arg.field){
 				if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.onChanges();
+				}else if(arg.field=="taxes"){
+					var dataRow = arg.items[0];
+
+					if(dataRow.taxes){
+						dataRow.set("tax_id", dataRow.taxes.id);
+					}
+
 					self.onChanges();
 			    }else if(arg.field=="discount_percentage"){
 			    	var dataRow = arg.items[0],
@@ -2750,12 +3374,11 @@
 				subTotal += amount;
 				discount += value.discount;
 
-				if(value.tax_id>0){
-					var taxes = this.taxDS.get(value.tax_id),
-						taxAmount = amount * taxes.rate;
+				if(value.taxes){
+					var taxAmount = amount * value.taxes.rate;
 
-						tax += taxAmount;
-						value.set("tax", taxAmount);
+					tax += taxAmount;
+					value.set("tax", taxAmount);
 				}
 				
 				value.set("amount", amount);
@@ -3123,49 +3746,6 @@
 			this.set("key", "");
 			this.set("rawFile", "");
 		},
-	    saveAttachment 	 	: function(){
-	    	$.each(this.attachmentDS.data(), function(index, value){
-		    	if(!value.id){
-			    	var params = { 
-		            	Body: value.file, 
-		            	Key: value.key 
-		            };
-		            bucket.upload(params, function (err, data) {
-	                	// console.log(err, data);
-	                	// var url = data.Location;                
-	            	});
-            	}
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-            	//Delete File
-            	if(e.type=="destroy"){
-	            	if(saved==false && e.response){
-	            		saved = true;
-	            	
-	            		var response = e.response.results;
-	            		$.each(response, function(index, value){            			
-		            		var params = {
-							  	//Bucket: 'STRING_VALUE', /* required */
-							 	Delete: { /* required */
-								    Objects: [ /* required */
-								      	{
-									        Key: value.data.key /* required */
-								      	}
-								      /* more items */
-								    ]
-							  	}
-							};
-							bucket.deleteObjects(params, function(err, data) {
-							  	//console.log(err, data);
-							});
-						});
-	            	}
-            	}
-            });
-	    },
 		generateNumber 		: function(){
 			var self = this, where = {},
 				obj = this.get("obj");
@@ -3218,7 +3798,7 @@
 				cost 					: 0,
 				price 					: 0,
 				description 			: "",
-				image_url 				: "https://aijazspace.sgp1.digitaloceanspaces.com/no_image.jpg",
+				image_url 				: app.noImage,
 				thumbnail_url 			: "",
 				favorite 				: 0
 			});
@@ -3298,6 +3878,10 @@
 	});
 
 	app.settings = kendo.observable({
+		pageLoad : function(){}
+	});
+
+	app.company_profile = kendo.observable({
 		dataSource      		: app.companyDS,
 		currencyList     		: app.source.currencyList,
 		currencyFormatList      : app.source.currencyFormatList,
@@ -3397,33 +3981,106 @@
 		dataSource      	: dataStore(apiUrl + "categories"),
 		title 				: "Manage Category",
 		obj 				: [],
+		key 				: "",
+		rawFile 			: "",
 		pageLoad 			: function(){},
-		setObj 				: function(){
-			var newObj = { name:"name new obj", description: "description new obj" };
+		//Upload
+		onSelect 				: function(e){
+	        // Array with information about the uploaded files
+	        var files = e.files[0],
+				obj = this.get("obj"),
+				validating = true;
 
-			this.set("obj", newObj);
+	        var fileReader = new FileReader();
+	        fileReader.onload = function (event) {
+	            var mapImage = event.target.result;
+				obj.set("image_url", mapImage);
+	        }
+			fileReader.readAsDataURL(files.rawFile);
+			
+			//Check file size
+			if(files.size > 2000000){
+				validating = false;
+
+				app.source.warningAlert("Image max size 2MB.");
+			}
+
+			// Check the extension of each file and abort the upload if it is not .jpg	       
+			if (files.extension.toLowerCase() === ".jpg"
+				|| files.extension.toLowerCase() === ".jpeg"
+				|| files.extension.toLowerCase() === ".tiff"
+				|| files.extension.toLowerCase() === ".png" 
+				|| files.extension.toLowerCase() === ".gif"){
+			}else{
+				validating = false;
+
+				app.source.warningAlert("Image type not support");
+			}
+
+			if(validating){
+				var key = 'CAT_' + app.companyData.id + "_" + Math.floor(Math.random() * 100000000000000001) + files.extension.toLowerCase();
+
+				this.set("key", key);
+				this.set("rawFile", files.rawFile);
+			}
+	    },
+		uploadFile 			: function(){
+			var obj = this.get("obj"),
+				key = this.get("key"),
+				rawFile = this.get("rawFile");
+
+			// Configure client for use with Spaces
+			const spacesEndpoint = new AWS.Endpoint('sgp1.digitaloceanspaces.com');
+			const s3 = new AWS.S3({
+				endpoint: spacesEndpoint,
+				accessKeyId: 'RLLAFQW7HMBIHKFF5JVO',
+				secretAccessKey: 'FIwoCPuw2jO0D7Cg+kdZzUoWmK/CnDmGUgXuYfPPQC0'
+			});
+
+			// Add a file to Space
+			var params = {
+				ACL: "public-read",
+				Body: rawFile, 
+				Bucket: "aijazspace/pos", 
+				Key: key
+			};
+
+			s3.putObject(params, function(err, data) {
+				if (err) console.log(err, err.stack); // an error occurred
+				else console.log(data); // successful response
+			});
+			
+			obj.set("image_url", "https://aijazspace." + app.space +"/pos/"+ key);
+			this.set("key", "");
+			this.set("rawFile", "");
 		},
 		edit 				: function(e){
 			var data = e.data;
 			
 			this.set("obj", data);
 		},
-		read 				: function(){
-			var obj = this.get("obj");
-
-			this.dataSource.filter({ field:"name", value: obj.name });
-		},
 		add				: function(){
 			var obj = this.get("obj");
 
+			//Upload
+			if(this.get("rawFile")!==""){
+				this.uploadFile();
+			}
+
 			this.dataSource.add({
 				name 			: obj.name,
-				description 	: obj.description
+				description 	: obj.description,
+				image_url 		: obj.image_url
 			});
 
 			this.dataSource.sync();
 		},
 		update 			: function(){
+			//Upload
+			if(this.get("rawFile")!==""){
+				this.uploadFile();
+			}
+
 			this.dataSource.sync();
 		},
 		delete 			: function(e){
@@ -3769,6 +4426,213 @@
 					{ include: "employees"	}
 				],
 				sort: { field:"transaction_date", dir: "DESC" },
+				group:{	field:"employees.name"},
+                page:1,
+                pageSize:10
+            }).then(function(){
+            	// var view = self.dataSource.view();
+            });
+		}
+	});
+
+	app.report = kendo.observable({
+		pageLoad : function(){}
+	});
+
+	app.sale_by_customer = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "transactions"),
+		contactsDS      		: dataStore(apiUrl + "contacts"),
+		sortList				: app.source.sortList,
+		sorter 					: "today",
+		sdate 					: "",
+		edate 					: "",
+		pageLoad        		: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+				start = this.get("sdate"),
+				end = this.get("edate");
+				contact_id = this.get("contact_id");
+
+
+			if(contact_id){
+				where.contact_id = contact_id;
+			}
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+            	where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lte": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(start){
+            	start = new Date(start);
+            	end = new Date(start);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+				where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(end){
+            	end = new Date(end);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+        		
+            	where.transaction_date = {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")};
+			}else{}
+			
+			
+            this.dataSource.query({
+            	filter:[ 
+					{ where },
+					{ include: "contacts"	}
+				],
+				sort: { field:"transaction_date", dir: "DESC" },
+				group:{field:"contacts.name"},
+                page:1,
+                pageSize:10
+            }).then(function(){
+				// var view = self.dataSource.view();
+			});
+		}
+	});
+
+	app.session_report_by_employee = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "sale_sessions"),
+		employeeDS      		: dataStore(apiUrl + "employees"),
+		sortList				: app.source.sortList,
+		sorter 					: "today",
+		sdate 					: "",
+		edate 					: "",
+		pageLoad        		: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+				start = this.get("sdate"),
+        		end = this.get("edate");
+				employee_id = this.get("employee_id");
+
+			if(employee_id){
+            	where.employee_id = employee_id;
+            }
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+            	where.and = [
+					{ start_at : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ start_at : {"lte": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(start){
+            	start = new Date(start);
+            	end = new Date(start);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+				where.and = [
+					{ start_at : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ start_at : {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(end){
+            	end = new Date(end);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+        		
+            	where.start_at = {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")};
+            }else{}
+            
+            this.dataSource.query({
+            	filter:[ 
+					{ where },
+					{ include: "employees"	}
+				],
+				sort: { field:"start_at", dir: "DESC" },
+				group:{	field:"employees.name"},
                 page:1,
                 pageSize:10
             }).then(function(){
@@ -3784,9 +4648,10 @@
 		index       : new kendo.Layout("#index", {model: app.index}),
 		menu        : new kendo.Layout('#menu-tmpl'),       
 
-		//Users
-		users       : new kendo.Layout("#users", {model: app.users}),
-		userList      : new kendo.Layout("#userList", {model: app.userList}),
+		//Staff
+		staff       		: new kendo.Layout("#staff", {model: app.staff}),
+		staffList      		: new kendo.Layout("#staffList", {model: app.staffList}),
+		userNewPassword     : new kendo.Layout("#userNewPassword", {model: app.userNewPassword}),
 
 		//Sales
 		sales: new kendo.Layout("#sales", {model: app.sales}),
@@ -3801,6 +4666,7 @@
 		//Settings
 		settings: new kendo.Layout("#settings", {model: app.settings}),
 		category: new kendo.Layout("#category", {model: app.category}),
+		company_profile: new kendo.Layout("#company_profile", {model: app.company_profile}),
 
 		//UOM
 		unit_of_measurements: new kendo.Layout("#unit_of_measurements", {model: app.unit_of_measurements}),
@@ -3816,6 +4682,12 @@
 
 		sale_by_employee: new kendo.Layout("#sale_by_employee", {model: app.sale_by_employee}),
 
+		report: new kendo.Layout("#report", {model: app.report}),
+
+		sale_by_customer: new kendo.Layout("#sale_by_customer", {model: app.sale_by_customer}),
+
+		session_report_by_employee: new kendo.Layout("#session_report_by_employee", {model: app.session_report_by_employee}),
+		
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
 	};
@@ -3847,27 +4719,38 @@
 	});
 	
 	/************************************************
-	*  User Router   								*
+	*  Staff Router   								*
 	************************************************/
-	app.router.route("/users", function(){                 
-		app.view.layout.showIn("#content", app.view.users);
+	app.router.route("/staff", function(){                 
+		app.view.layout.showIn("#content", app.view.staff);
 		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
 
-		var vm = app.users;
-		if(app.pageLoaded["users"]==undefined){
-			app.pageLoaded["users"] = true;                
+		var vm = app.staff;
+		if(app.pageLoaded["staff"]==undefined){
+			app.pageLoaded["staff"] = true;                
 			vm.setObj();
 		}
 
 		vm.pageLoad();        
 	});
-	app.router.route("/user_list", function(){                 
-		app.view.layout.showIn("#content", app.view.userList);
+	app.router.route("/staff_list", function(){                 
+		app.view.layout.showIn("#content", app.view.staffList);
 		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
 
-		var vm = app.userList;
-		if(app.pageLoaded["user_list"]==undefined){
-			app.pageLoaded["user_list"] = true;
+		var vm = app.staffList;
+		if(app.pageLoaded["staff_list"]==undefined){
+			app.pageLoaded["staff_list"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+	app.router.route("/user_new_password", function(){                 
+		app.view.layout.showIn("#content", app.view.userNewPassword);
+
+		var vm = app.userNewPassword;
+		if(app.pageLoaded["staff"]==undefined){
+			app.pageLoaded["staff"] = true;                
+			vm.setObj();
 		}
 
 		vm.pageLoad();        
@@ -3905,23 +4788,8 @@
 			// Numpad
 			$('#txtReceiveAmount').keyboard({type:'numpad'});
 
-			vm.stockDS.insert(0, {
-				transaction_id 		: 0,
-				product_id 			: 0,
-				description 		: 0,
-				quantity 			: 1,
-				movement 			: -1,
-				price 				: 0,
-				discount 			: 0,
-				discount_percentage	: 0,
-				amount 				: 0,
-				tax 				: 0,
-
-				products 			: []
-			});
-
-			var obj = vm.stockDS.at(0);
-			vm.stockDS.remove(obj);
+			var grid = $("#grid").data("kendoGrid");
+			grid.refresh();
 		}
 		vm.pageLoad(id);        
 	});
@@ -3990,6 +4858,18 @@
 		var vm = app.settings;
 		if(app.pageLoaded["settings"]==undefined){
 			app.pageLoaded["settings"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/company_profile", function(){                 
+		app.view.layout.showIn("#content", app.view.company_profile);
+		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
+
+		var vm = app.company_profile;
+		if(app.pageLoaded["company_profile"]==undefined){
+			app.pageLoaded["company_profile"] = true;
 		}
 
 		vm.pageLoad();        
@@ -4067,6 +4947,44 @@
 		var vm = app.sale_by_employee;
 		if(app.pageLoaded["sale_by_employee"]==undefined){
 			app.pageLoaded["sale_by_employee"] = true;
+
+			vm.sorterChanges();
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/report", function(){                 
+		app.view.layout.showIn("#content", app.view.report);
+		app.view.menu.showIn('#secondary-menu', app.view.saleMenu);
+
+		var vm = app.settings;
+		if(app.pageLoaded["report"]==undefined){
+			app.pageLoaded["report"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/sale_by_customer", function(){                 
+		app.view.layout.showIn("#content", app.view.sale_by_customer);
+
+		var vm = app.sale_by_customer;
+		if(app.pageLoaded["sale_by_customer"]==undefined){
+			app.pageLoaded["sale_by_customer"] = true;
+
+			vm.sorterChanges();
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/session_report_by_employee", function(){                 
+		app.view.layout.showIn("#content", app.view.session_report_by_employee);
+
+		var vm = app.session_report_by_employee;
+		if(app.pageLoaded["session_report_by_employee"]==undefined){
+			app.pageLoaded["session_report_by_employee"] = true;
 
 			vm.sorterChanges();
 		}

@@ -30,7 +30,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "employees": {
+      "type": "belongsTo",
+      "model": "employees",
+      "foreignKey": "employee_id"
+    }
+  },
   "acls": [
     {
       "accessType": "*",
