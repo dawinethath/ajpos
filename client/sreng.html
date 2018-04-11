@@ -2002,14 +2002,21 @@
 							</a>
 						</div>
 					</li>
-					<li class="dd-item dd3-item" data-id="13">
+					<li class="dd-item dd3-item" data-id="14">
 						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
 							<a href="#/sale_by_customer">
 								<h5 type="text" class="" style="">របាយការណ៍លក់តាមអតិថិជន</h5>
 							</a>
 						</div>
 					</li>
-					<li class="dd-item dd3-item" data-id="14">
+					<li class="dd-item dd3-item" data-id="15">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/session_report_by_employee">
+								<h5 type="text" class="" style="">របាយការណ៍លក់តាមវេនបុគ្គលិក</h5>
+							</a>
+						</div>
+					</li>
+					<li class="dd-item dd3-item" data-id="16">
 						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
 							<a href="#/contact_list">
 								<h5 type="text" class="" style="">បញ្ជីអតិថិជន</h5>
@@ -2116,7 +2123,7 @@
 			<header class="box-typical-header">
 				<div class="tbl-row">
 					<div class="tbl-cell tbl-cell-title">
-						<h3>របាយការណ៍លក់តាមបុគ្គលិក </h3>
+						<h3>របាយការណ៍លក់តាមវេនបុគ្គលិក </h3> 
 					</div>
 					<div class="tbl-cell tbl-cell-action-bordered">
 						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
@@ -2195,6 +2202,122 @@
 				</div>
 			</div><!--.box-typical-body-->
 		</section>
+	</div><!--.container-fluid-->
+</script>
+
+<script id="dashboard" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<h1>Overview</h1>
+
+		<div class="row">
+			<div class="col-xl-6">
+				<div class="chart-statistic-box">
+					<div class="chart-txt">
+						<div class="chart-txt-top">
+							<p><span class="unit">$</span><span class="number">1540</span></p>
+							<p class="caption">Week income</p>
+						</div>
+						<table class="tbl-data">
+							<tbody><tr>
+								<td class="price color-purple">120$</td>
+								<td>Orders</td>
+							</tr>
+							<tr>
+								<td class="price color-yellow">15$</td>
+								<td>Investments</td>
+							</tr>
+							<tr>
+								<td class="price color-lime">55$</td>
+								<td>Others</td>
+							</tr>
+						</tbody></table>
+					</div>
+					<div class="chart-container">
+						<div class="chart-container-in">
+							<div id="chart_div"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 273px; height: 314px;"><div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="273" height="314" aria-label="A chart." style="overflow: hidden;"><defs id="defs"><clipPath id="_ABSTRACT_RENDERER_ID_6"><rect x="0" y="0" width="273" height="314"></rect></clipPath></defs><rect x="0" y="0" width="273" height="314" stroke="none" stroke-width="0" fill="#008ffb"></rect><g><rect x="0" y="0" width="273" height="314" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(file:///C:/Users/Administrator/Downloads/themeforest-15228250-startui-premium-bootstrap-4-admin-dashboard-template/build/index.html#_ABSTRACT_RENDERER_ID_6)"><g><rect x="0" y="313" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="291" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="268" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="246" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="224" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="201" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="179" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="157" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="134" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="112" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="89" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="67" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="45" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="22" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect><rect x="0" y="0" width="273" height="1" stroke="none" stroke-width="0" fill="#1ba0fc"></rect></g><g><g><path d="M0.5,313.5L0.5,313.5L0.5,197.24285714285713L34.5,197.24285714285713L68.5,152.52857142857144L102.5,157L136.5,134.64285714285714L170.5,161.4714285714286L204.5,89.92857142857144L238.5,116.75714285714287L272.5,116.75714285714287L272.5,313.5L272.5,313.5Z" stroke="none" stroke-width="0" fill-opacity="0.18" fill="#ffffff"></path></g></g><g><rect x="0" y="313" width="273" height="1" stroke="none" stroke-width="0" fill="#16b4fc"></rect></g><g><path d="M0.5,197.24285714285713L34.5,197.24285714285713L68.5,152.52857142857144L102.5,157L136.5,134.64285714285714L170.5,161.4714285714286L204.5,89.92857142857144L238.5,116.75714285714287L272.5,116.75714285714287" stroke="#ffffff" stroke-width="2" fill-opacity="1" fill="none"></path></g></g><g><circle cx="0.5" cy="197.24285714285713" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="34.5" cy="197.24285714285713" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="68.5" cy="152.52857142857144" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="102.5" cy="157" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="136.5" cy="134.64285714285714" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="170.5" cy="161.4714285714286" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="204.5" cy="89.92857142857144" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="238.5" cy="116.75714285714287" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle><circle cx="272.5" cy="116.75714285714287" r="3.5" stroke="none" stroke-width="0" fill="#ffffff"></circle></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Day</th><th>Values</th></tr></thead><tbody><tr><td>MON</td><td>130</td></tr><tr><td>TUE</td><td>130</td></tr><tr><td>WED</td><td>180</td></tr><tr><td>THU</td><td>175</td></tr><tr><td>FRI</td><td>200</td></tr><tr><td>SAT</td><td>170</td></tr><tr><td>SUN</td><td>250</td></tr><tr><td>MON</td><td>220</td></tr><tr><td>TUE</td><td>220</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 324px; left: 283px; white-space: nowrap; font-family: &quot;Proxima Nova&quot;; font-size: 11px; font-weight: bold;">...</div><div></div></div></div>
+							<header class="chart-container-title">Income</header>
+							<div class="chart-container-x">
+								<div class="item"></div>
+								<div class="item">tue</div>
+								<div class="item">wed</div>
+								<div class="item">thu</div>
+								<div class="item">fri</div>
+								<div class="item">sat</div>
+								<div class="item">sun</div>
+								<div class="item">mon</div>
+								<div class="item"></div>
+							</div>
+							<div class="chart-container-y">
+								<div class="item">300</div>
+								<div class="item"></div>
+								<div class="item">250</div>
+								<div class="item"></div>
+								<div class="item">200</div>
+								<div class="item"></div>
+								<div class="item">150</div>
+								<div class="item"></div>
+								<div class="item">100</div>
+								<div class="item"></div>
+								<div class="item">50</div>
+								<div class="item"></div>
+							</div>
+						</div>
+					</div>
+				</div><!--.chart-statistic-box-->
+			</div><!--.col-->
+			<div class="col-xl-6">
+				<div class="row">
+					<div class="col-sm-6">
+						<article class="statistic-box red">
+							<div>
+								<div class="number">26</div>
+								<div class="caption"><div>Open tickets</div></div>
+								<div class="percent">
+									<div class="arrow up"></div>
+									<p>15%</p>
+								</div>
+							</div>
+						</article>
+					</div><!--.col-->
+					<div class="col-sm-6">
+						<article class="statistic-box purple">
+							<div>
+								<div class="number">12</div>
+								<div class="caption"><div>Closes tickets</div></div>
+								<div class="percent">
+									<div class="arrow down"></div>
+									<p>11%</p>
+								</div>
+							</div>
+						</article>
+					</div><!--.col-->
+					<div class="col-sm-6">
+						<article class="statistic-box yellow">
+							<div>
+								<div class="number">104</div>
+								<div class="caption"><div>New clients</div></div>
+								<div class="percent">
+									<div class="arrow down"></div>
+									<p>5%</p>
+								</div>
+							</div>
+						</article>
+					</div><!--.col-->
+					<div class="col-sm-6">
+						<article class="statistic-box green">
+							<div>
+								<div class="number">29</div>
+								<div class="caption"><div>Here is an example of a long name</div></div>
+								<div class="percent">
+									<div class="arrow up"></div>
+									<p>84%</p>
+								</div>
+							</div>
+						</article>
+					</div><!--.col-->
+				</div><!--.row-->
+			</div><!--.col-->
+		</div>
 	</div><!--.container-fluid-->
 </script>
 
@@ -4640,6 +4763,12 @@
             });
 		}
 	});
+
+	app.dashborad = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "transactions"),
+		pageLoad        		: function(){
+		},
+	});
 	
 	/* Views & Layout */
 	app.view = {
@@ -4687,6 +4816,8 @@
 		sale_by_customer: new kendo.Layout("#sale_by_customer", {model: app.sale_by_customer}),
 
 		session_report_by_employee: new kendo.Layout("#session_report_by_employee", {model: app.session_report_by_employee}),
+
+		dashborad: new kendo.Layout("#dashborad", {model: app.dashborad}),
 		
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
@@ -4985,6 +5116,19 @@
 		var vm = app.session_report_by_employee;
 		if(app.pageLoaded["session_report_by_employee"]==undefined){
 			app.pageLoaded["session_report_by_employee"] = true;
+
+			vm.sorterChanges();
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/dashborad", function(){                 
+		app.view.layout.showIn("#content", app.view.dashborad);
+
+		var vm = app.dashborad;
+		if(app.pageLoaded["dashborad"]==undefined){
+			app.pageLoaded["dashborad"] = true;
 
 			vm.sorterChanges();
 		}

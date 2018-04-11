@@ -1092,7 +1092,7 @@
 						<li class="dd-item dd3-item" data-id="13">
 							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
 								<a href="#/company_profile">
-									<h5 type="text" class="" style="">Company Profile</h5>
+									<h5 type="text" class="" style="">ពត៌មានក្រុមហ៊ុន</h5>
 								</a>
 							</div>
 						</li>
@@ -1105,22 +1105,29 @@
 						</li>
 						<li class="dd-item dd3-item" data-id="14">
 							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
-								<a href="#/category">
-									<h5 type="text" class="" style="">Category</h5>
-								</a>
+									<h5 type="text" class="" style="">ការកំណត់</h5>
 							</div>
-						</li>
-						<li class="dd-item dd3-item" data-id="14">
-							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
-								<a href="#/unit_of_measurements">
-									<h5 type="text" class="" style="">UOM</h5>
-								</a>
-							</div>
+							<ol class="dd-list">
+								<li class="dd-item dd3-item" data-id="16">
+									<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+										<a href="#/category">
+											<h5 type="text" class="" style="">ប្រភេទ</h5>
+										</a>
+									</div>
+								</li>
+								<li class="dd-item dd3-item" data-id="17">
+									<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+										<a href="#/unit_of_measurements">
+											<h5 type="text" class="" style="">ខ្នាត</h5>
+										</a>
+									</div>
+								</li>
+							</ol>
 						</li>
 						<li class="dd-item dd3-item" data-id="14">
 							<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
 								<a href="#/taxes">
-									<h5 type="text" class="" style="">Taxes</h5>
+									<h5 type="text" class="" style="">ពន្ធ</h5>
 								</a>
 							</div>
 						</li>
@@ -2013,6 +2020,20 @@
 					</li>
 					<li class="dd-item dd3-item" data-id="14">
 						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/sale_by_customer">
+								<h5 type="text" class="" style="">របាយការណ៍លក់តាមអតិថិជន</h5>
+							</a>
+						</div>
+					</li>
+					<li class="dd-item dd3-item" data-id="15">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
+							<a href="#/session_report_by_employee">
+								<h5 type="text" class="" style="">របាយការណ៍លក់តាមវេនបុគ្គលិក</h5>
+							</a>
+						</div>
+					</li>
+					<li class="dd-item dd3-item" data-id="16">
+						<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">
 							<a href="#/contact_list">
 								<h5 type="text" class="" style="">បញ្ជីអតិថិជន</h5>
 							</a>
@@ -2022,6 +2043,182 @@
 			</div>
 		</div>
 	</div>
+</script>
+
+<script id="sale_by_customer" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>របាយការណ៍លក់តាមអតិថិជន </h3>
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<table class="table gridBorderless">
+							<tr>
+								<td>
+									<input data-role="dropdownlist"        
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: sorter,
+													source: sortList,
+													events: { change: sorterChanges }" />
+								</td>
+								<td>
+									<input data-role="datepicker"
+											class="sdate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: sdate"
+											placeholder="ចាប៉ពី ..." >
+			
+									<input data-role="datepicker"
+											class="edate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: edate"
+											placeholder="ដល់ ..." >
+								</td>
+								<td>
+									<input data-role="dropdownlist"
+									data-auto-bind="false"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: contact_id,
+												source: contactsDS"
+									data-option-label="--- អតិថិជន ---"
+									style="width: 110%;"/>
+								</td>
+								<td>	
+									<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							<tr>
+						</table>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-columns="[
+							{ field: 'transaction_date',title: 'កាលបរិច្ឆេទ', template: '#=dateFormat(transaction_date)#' },
+							{ field: 'contacts.name', title: 'អតិថិជន' },
+							{ field: 'number', title: 'លេខកូដ' },
+							{ field: 'type', title: 'ប្រភេទ' },
+							{ field: 'amount', title: 'ទឹកប្រាក់', template: '#=currencyFormat(amount)#' },
+						]"
+						data-auto-bind="false"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
+</script>
+
+<script id="session_report_by_employee" type="text/x-kendo-template">
+	<div class="container-fluid">
+		<section class="box-typical">
+			<header class="box-typical-header">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<h3>របាយការណ៍លក់តាមវេនបុគ្គលិក </h3> 
+					</div>
+					<div class="tbl-cell tbl-cell-action-bordered">
+						<button type="button" class="action-btn" onclick="javascript:window.history.back()">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<div class="box-typical-body">
+				<div class="tbl-row">
+					<div class="tbl-cell tbl-cell-title">
+						<table class="table gridBorderless">
+							<tr>
+								<td>
+									<input data-role="dropdownlist"        
+											data-value-primitive="true"
+											data-text-field="text"
+											data-value-field="value"
+											data-bind="value: sorter,
+													source: sortList,
+													events: { change: sorterChanges }" />
+								</td>
+								<td>
+									<input data-role="datepicker"
+											class="sdate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: sdate"
+											placeholder="ចាប៉ពី ..." >
+			
+									<input data-role="datepicker"
+											class="edate"
+											data-format="dd-MM-yyyy"
+											data-bind="value: edate"
+											placeholder="ដល់ ..." >
+								</td>
+								<td>
+									<input data-role="dropdownlist"
+									data-auto-bind="false"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: employee_id,
+												source: employeeDS"
+									data-option-label="--- បុគ្គលិក ---"
+									style="width: 110%;"/>
+								</td>
+								<td>	
+									<button type="button" class="btn btn-inline btn-primary pos-button-search" data-bind="click: search">
+										<i class="fa fa-search"></i>
+									</button>
+								</td>
+							<tr>
+						</table>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<div data-role="grid"
+						data-column-menu="true"
+						data-reorderable="true"
+						data-scrollable="true"
+						data-resizable="true"
+						data-pageable="true"
+						data-no-records="true"
+						data-messages="{
+							noRecords: 'ពុំមានទិន្នន័យ'
+						}"
+						data-columns="[
+							{ field: 'start_at',title: 'ចាប់ផ្តើមនៅ', template: '#=dateFormat(start_at)#' },
+							{ field: 'end_at', title: 'បញ្ចប់នៅ', template: '#=dateFormat(end_at)#'  },
+							{ field: 'employees.name', title: 'បុគ្គលិក' },
+							{ field: 'start_amount', title: 'ចាប់ផ្តើមចំនួន', template: '#=currencyFormat(start_amount)#' },
+							{ field: 'end_amount', title: 'បញ្ចប់ចំនួន', template: '#=currencyFormat(end_amount)#' },
+						]"
+						data-auto-bind="false"
+						data-bind="source: dataSource"></div>
+				</div>
+			</div><!--.box-typical-body-->
+		</section>
+	</div><!--.container-fluid-->
 </script>
 
 <!-- ********************************************
@@ -4149,6 +4346,208 @@
 	app.report = kendo.observable({
 		pageLoad : function(){}
 	});
+
+	app.sale_by_customer = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "transactions"),
+		contactsDS      		: dataStore(apiUrl + "contacts"),
+		sortList				: app.source.sortList,
+		sorter 					: "today",
+		sdate 					: "",
+		edate 					: "",
+		pageLoad        		: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+				start = this.get("sdate"),
+				end = this.get("edate");
+				contact_id = this.get("contact_id");
+
+
+			if(contact_id){
+				where.contact_id = contact_id;
+			}
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+            	where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lte": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(start){
+            	start = new Date(start);
+            	end = new Date(start);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+				where.and = [
+					{ transaction_date : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ transaction_date : {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(end){
+            	end = new Date(end);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+        		
+            	where.transaction_date = {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")};
+			}else{}
+			
+			
+            this.dataSource.query({
+            	filter:[ 
+					{ where },
+					{ include: "contacts"	}
+				],
+				sort: { field:"transaction_date", dir: "DESC" },
+				group:{field:"contacts.name"},
+                page:1,
+                pageSize:10
+            }).then(function(){
+				// var view = self.dataSource.view();
+			});
+		}
+	});
+
+	app.session_report_by_employee = kendo.observable({
+		dataSource      		: dataStore(apiUrl + "sale_sessions"),
+		employeeDS      		: dataStore(apiUrl + "employees"),
+		sortList				: app.source.sortList,
+		sorter 					: "today",
+		sdate 					: "",
+		edate 					: "",
+		pageLoad        		: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, 
+				where = {},
+				start = this.get("sdate"),
+        		end = this.get("edate");
+				employee_id = this.get("employee_id");
+
+			if(employee_id){
+            	where.employee_id = employee_id;
+            }
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+            	where.and = [
+					{ start_at : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ start_at : {"lte": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(start){
+            	start = new Date(start);
+            	end = new Date(start);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+
+				where.and = [
+					{ start_at : {"gte": kendo.toString(new Date(start), "yyyy-MM-dd")} },
+					{ start_at : {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")} }
+				]
+            }else if(end){
+            	end = new Date(end);
+            	//Add 1 day
+        		end.setDate(end.getDate() + 1);
+        		
+            	where.start_at = {"lt": kendo.toString(new Date(end), "yyyy-MM-dd")};
+            }else{}
+            
+            this.dataSource.query({
+            	filter:[ 
+					{ where },
+					{ include: "employees"	}
+				],
+				sort: { field:"start_at", dir: "DESC" },
+				group:{	field:"employees.name"},
+                page:1,
+                pageSize:10
+            }).then(function(){
+            	// var view = self.dataSource.view();
+            });
+		}
+	});
 	
 	/* Views & Layout */
 	app.view = {
@@ -4192,6 +4591,10 @@
 		sale_by_employee: new kendo.Layout("#sale_by_employee", {model: app.sale_by_employee}),
 
 		report: new kendo.Layout("#report", {model: app.report}),
+
+		sale_by_customer: new kendo.Layout("#sale_by_customer", {model: app.sale_by_customer}),
+
+		session_report_by_employee: new kendo.Layout("#session_report_by_employee", {model: app.session_report_by_employee}),
 		
 		//Menu
 		saleMenu: new kendo.View("#saleMenu")
@@ -4465,6 +4868,32 @@
 		var vm = app.settings;
 		if(app.pageLoaded["report"]==undefined){
 			app.pageLoaded["report"] = true;
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/sale_by_customer", function(){                 
+		app.view.layout.showIn("#content", app.view.sale_by_customer);
+
+		var vm = app.sale_by_customer;
+		if(app.pageLoaded["sale_by_customer"]==undefined){
+			app.pageLoaded["sale_by_customer"] = true;
+
+			vm.sorterChanges();
+		}
+
+		vm.pageLoad();        
+	});
+
+	app.router.route("/session_report_by_employee", function(){                 
+		app.view.layout.showIn("#content", app.view.session_report_by_employee);
+
+		var vm = app.session_report_by_employee;
+		if(app.pageLoaded["session_report_by_employee"]==undefined){
+			app.pageLoaded["session_report_by_employee"] = true;
+
+			vm.sorterChanges();
 		}
 
 		vm.pageLoad();        

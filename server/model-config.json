@@ -82,5 +82,9 @@
   "employees": {
     "dataSource": "posDS",
     "public": true
+  },
+  "dashboard": {
+    "dataSource": "posDS",
+    "public": true
   }
 }
